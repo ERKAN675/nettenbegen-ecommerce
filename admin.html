@@ -6,6 +6,8 @@
     <title>Nettenbegen Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -10740,115 +10742,273 @@
             }
 
             const reportType = activeTab.getAttribute('data-report');
-            let reportData = [];
             let fileName = '';
 
-            // Rapor türüne göre veri hazırla
+            // Rapor türüne göre dosya adı belirle
             switch(reportType) {
                 case 'sales':
-                    reportData = generateSalesReportData();
-                    fileName = `satis_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    fileName = `satis_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
+                    generateSalesPDF();
                     break;
                 case 'customers':
-                    reportData = generateCustomersReportData();
-                    fileName = `musteri_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    fileName = `musteri_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
+                    generateCustomersPDF();
                     break;
                 case 'products':
-                    reportData = generateProductsReportData();
-                    fileName = `urun_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    fileName = `urun_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
+                    generateProductsPDF();
                     break;
                 case 'inventory':
-                    reportData = generateInventoryReportData();
-                    fileName = `stok_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    fileName = `stok_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
+                    generateInventoryPDF();
                     break;
                 default:
                     showNotification('Bilinmeyen rapor türü!', 'error');
                     return;
             }
 
-            if (reportData.length === 0) {
-                showNotification('Dışa aktarılacak veri bulunamadı!', 'error');
-                return;
-            }
-
-            // CSV dosyasını oluştur ve indir
-            downloadCSV(reportData, fileName);
-            showNotification('Rapor başarıyla dışa aktarıldı!', 'success');
+            showNotification('PDF raporu başarıyla oluşturuldu!', 'success');
         }
 
-        function generateSalesReportData() {
+        function generateSalesPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Başlık
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Satış Raporu', 105, 20, { align: 'center' });
+            
+            // Tarih
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Oluşturulma Tarihi: ${new Date().toLocaleDateString('tr-TR')}`, 105, 30, { align: 'center' });
+            
+            // Özet bilgiler
             const orders = loadOrdersData();
-            const reportData = [
-                ['Sipariş ID', 'Müşteri', 'Ürünler', 'Toplam Tutar', 'Durum', 'Tarih']
-            ];
-
-            orders.forEach(order => {
-                const products = order.products.map(p => p.name).join(', ');
-                reportData.push([
-                    order.id,
-                    order.customer,
-                    products,
-                    `₺${order.total.toLocaleString()}`,
-                    order.status,
-                    order.date
-                ]);
+            const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+            const totalOrders = orders.length;
+            
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Özet Bilgiler:', 20, 50);
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Toplam Sipariş: ${totalOrders}`, 20, 60);
+            doc.text(`Toplam Gelir: ${totalRevenue.toLocaleString('tr-TR')} ₺`, 20, 70);
+            
+            // Tablo başlığı
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Sipariş Detayları:', 20, 90);
+            
+            // Tablo verileri
+            const tableData = orders.map(order => [
+                order.id,
+                order.customer,
+                order.products.map(p => p.name).join(', '),
+                `${order.total.toLocaleString('tr-TR')} ₺`,
+                order.status,
+                order.date
+            ]);
+            
+            doc.autoTable({
+                startY: 100,
+                head: [['Sipariş ID', 'Müşteri', 'Ürünler', 'Toplam Tutar', 'Durum', 'Tarih']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { fillColor: [102, 126, 234] },
+                styles: { fontSize: 8 },
+                columnStyles: {
+                    0: { cellWidth: 20 },
+                    1: { cellWidth: 30 },
+                    2: { cellWidth: 50 },
+                    3: { cellWidth: 25 },
+                    4: { cellWidth: 25 },
+                    5: { cellWidth: 25 }
+                }
             });
-
-            return reportData;
+            
+            // Dosyayı indir
+            doc.save(`satis_raporu_${new Date().toISOString().split('T')[0]}.pdf`);
         }
 
-        function generateCustomersReportData() {
+        function generateCustomersPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Başlık
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Müşteri Raporu', 105, 20, { align: 'center' });
+            
+            // Tarih
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Oluşturulma Tarihi: ${new Date().toLocaleDateString('tr-TR')}`, 105, 30, { align: 'center' });
+            
+            // Özet bilgiler
             const customers = loadCustomersData();
-            const reportData = [
-                ['Müşteri ID', 'Ad Soyad', 'E-posta', 'Telefon', 'Durum', 'Kayıt Tarihi', 'Toplam Sipariş']
-            ];
-
-            customers.forEach(customer => {
-                reportData.push([
-                    customer.id,
-                    customer.name,
-                    customer.email,
-                    customer.phone,
-                    customer.status,
-                    customer.registrationDate,
-                    customer.totalOrders || 0
-                ]);
+            const activeCustomers = customers.filter(c => c.status === 'Aktif' || c.status === 'VIP').length;
+            const totalCustomers = customers.length;
+            
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Özet Bilgiler:', 20, 50);
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Toplam Müşteri: ${totalCustomers}`, 20, 60);
+            doc.text(`Aktif Müşteri: ${activeCustomers}`, 20, 70);
+            
+            // Tablo başlığı
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Müşteri Detayları:', 20, 90);
+            
+            // Tablo verileri
+            const tableData = customers.map(customer => [
+                customer.id,
+                customer.name,
+                customer.email,
+                customer.phone,
+                customer.status,
+                customer.registrationDate,
+                customer.totalOrders || 0
+            ]);
+            
+            doc.autoTable({
+                startY: 100,
+                head: [['Müşteri ID', 'Ad Soyad', 'E-posta', 'Telefon', 'Durum', 'Kayıt Tarihi', 'Toplam Sipariş']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { fillColor: [102, 126, 234] },
+                styles: { fontSize: 8 },
+                columnStyles: {
+                    0: { cellWidth: 20 },
+                    1: { cellWidth: 35 },
+                    2: { cellWidth: 40 },
+                    3: { cellWidth: 30 },
+                    4: { cellWidth: 20 },
+                    5: { cellWidth: 25 },
+                    6: { cellWidth: 25 }
+                }
             });
-
-            return reportData;
+            
+            // Dosyayı indir
+            doc.save(`musteri_raporu_${new Date().toISOString().split('T')[0]}.pdf`);
         }
 
-        function generateProductsReportData() {
+        function generateProductsPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Başlık
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Ürün Raporu', 105, 20, { align: 'center' });
+            
+            // Tarih
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Oluşturulma Tarihi: ${new Date().toLocaleDateString('tr-TR')}`, 105, 30, { align: 'center' });
+            
+            // Özet bilgiler
             const products = loadAdvancedProductsData();
-            const reportData = [
-                ['Ürün ID', 'Ürün Adı', 'SKU', 'Kategori', 'Fiyat', 'Stok', 'Durum', 'Öne Çıkan']
-            ];
-
-            products.forEach(product => {
-                reportData.push([
-                    product.id,
-                    product.name,
-                    product.sku,
-                    product.category,
-                    `₺${product.price.toLocaleString()}`,
-                    product.stock,
-                    product.status,
-                    product.featured ? 'Evet' : 'Hayır'
-                ]);
+            const activeProducts = products.filter(p => p.status === 'Aktif').length;
+            const totalProducts = products.length;
+            const totalValue = products.reduce((sum, product) => sum + (product.price * product.stock), 0);
+            
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Özet Bilgiler:', 20, 50);
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Toplam Ürün: ${totalProducts}`, 20, 60);
+            doc.text(`Aktif Ürün: ${activeProducts}`, 20, 70);
+            doc.text(`Toplam Stok Değeri: ${totalValue.toLocaleString('tr-TR')} ₺`, 20, 80);
+            
+            // Tablo başlığı
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Ürün Detayları:', 20, 100);
+            
+            // Tablo verileri
+            const tableData = products.map(product => [
+                product.id,
+                product.name,
+                product.sku,
+                product.category,
+                `${product.price.toLocaleString('tr-TR')} ₺`,
+                product.stock,
+                product.status,
+                product.featured ? 'Evet' : 'Hayır'
+            ]);
+            
+            doc.autoTable({
+                startY: 110,
+                head: [['Ürün ID', 'Ürün Adı', 'SKU', 'Kategori', 'Fiyat', 'Stok', 'Durum', 'Öne Çıkan']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { fillColor: [102, 126, 234] },
+                styles: { fontSize: 8 },
+                columnStyles: {
+                    0: { cellWidth: 15 },
+                    1: { cellWidth: 40 },
+                    2: { cellWidth: 25 },
+                    3: { cellWidth: 25 },
+                    4: { cellWidth: 20 },
+                    5: { cellWidth: 15 },
+                    6: { cellWidth: 20 },
+                    7: { cellWidth: 20 }
+                }
             });
-
-            return reportData;
+            
+            // Dosyayı indir
+            doc.save(`urun_raporu_${new Date().toISOString().split('T')[0]}.pdf`);
         }
 
-        function generateInventoryReportData() {
+        function generateInventoryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Başlık
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Stok Raporu', 105, 20, { align: 'center' });
+            
+            // Tarih
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Oluşturulma Tarihi: ${new Date().toLocaleDateString('tr-TR')}`, 105, 30, { align: 'center' });
+            
+            // Özet bilgiler
             const products = loadAdvancedProductsData();
-            const reportData = [
-                ['Ürün ID', 'Ürün Adı', 'SKU', 'Kategori', 'Mevcut Stok', 'Kritik Stok', 'Durum', 'Son Güncelleme']
-            ];
-
-            products.forEach(product => {
+            const criticalStock = products.filter(p => p.stock <= 5).length;
+            const lowStock = products.filter(p => p.stock <= 20 && p.stock > 5).length;
+            const totalProducts = products.length;
+            
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Özet Bilgiler:', 20, 50);
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Toplam Ürün: ${totalProducts}`, 20, 60);
+            doc.text(`Kritik Stok: ${criticalStock}`, 20, 70);
+            doc.text(`Düşük Stok: ${lowStock}`, 20, 80);
+            
+            // Tablo başlığı
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Stok Detayları:', 20, 100);
+            
+            // Tablo verileri
+            const tableData = products.map(product => {
                 const stockStatus = product.stock <= 5 ? 'Kritik' : product.stock <= 20 ? 'Düşük' : 'Normal';
-                reportData.push([
+                return [
                     product.id,
                     product.name,
                     product.sku,
@@ -10857,41 +11017,30 @@
                     product.stock <= 5 ? 'Evet' : 'Hayır',
                     stockStatus,
                     product.updatedAt || new Date().toISOString().split('T')[0]
-                ]);
+                ];
             });
-
-            return reportData;
-        }
-
-        function downloadCSV(data, fileName) {
-            // CSV içeriğini oluştur
-            const csvContent = data.map(row => 
-                row.map(cell => `"${cell}"`).join(',')
-            ).join('\n');
-
-            // BOM ekle (Türkçe karakterler için)
-            const BOM = '\uFEFF';
-            const csvContentWithBOM = BOM + csvContent;
-
-            // Blob oluştur
-            const blob = new Blob([csvContentWithBOM], { 
-                type: 'text/csv;charset=utf-8;' 
+            
+            doc.autoTable({
+                startY: 110,
+                head: [['Ürün ID', 'Ürün Adı', 'SKU', 'Kategori', 'Mevcut Stok', 'Kritik Stok', 'Durum', 'Son Güncelleme']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { fillColor: [102, 126, 234] },
+                styles: { fontSize: 8 },
+                columnStyles: {
+                    0: { cellWidth: 15 },
+                    1: { cellWidth: 40 },
+                    2: { cellWidth: 25 },
+                    3: { cellWidth: 25 },
+                    4: { cellWidth: 20 },
+                    5: { cellWidth: 20 },
+                    6: { cellWidth: 20 },
+                    7: { cellWidth: 25 }
+                }
             });
-
-            // Download link oluştur
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
             
-            link.setAttribute('href', url);
-            link.setAttribute('download', fileName);
-            link.style.visibility = 'hidden';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // URL'yi temizle
-            URL.revokeObjectURL(url);
+            // Dosyayı indir
+            doc.save(`stok_raporu_${new Date().toISOString().split('T')[0]}.pdf`);
         }
     </script>
 
