@@ -3808,10 +3808,10 @@
                     <!-- Detaylı Raporlar -->
                     <div class="detailed-reports">
                         <div class="report-tabs">
-                            <button class="tab-btn active" onclick="showReportTab('sales')">Satış Raporu</button>
-                            <button class="tab-btn" onclick="showReportTab('customers')">Müşteri Raporu</button>
-                            <button class="tab-btn" onclick="showReportTab('products')">Ürün Raporu</button>
-                            <button class="tab-btn" onclick="showReportTab('inventory')">Stok Raporu</button>
+                            <button class="tab-btn active" data-report="sales" onclick="showReportTab('sales')">Satış Raporu</button>
+                            <button class="tab-btn" data-report="customers" onclick="showReportTab('customers')">Müşteri Raporu</button>
+                            <button class="tab-btn" data-report="products" onclick="showReportTab('products')">Ürün Raporu</button>
+                            <button class="tab-btn" data-report="inventory" onclick="showReportTab('inventory')">Stok Raporu</button>
                         </div>
                         
                         <div class="report-content" id="reportContent">
@@ -10539,7 +10539,10 @@
         function showReportTab(tabName) {
             const tabButtons = document.querySelectorAll('.report-tabs .tab-btn');
             tabButtons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            
+            // Tıklanan butonu bul ve active yap
+            const clickedButton = event.target;
+            clickedButton.classList.add('active');
             
             const reportContent = document.getElementById('reportContent');
             
@@ -10729,10 +10732,166 @@
         }
 
         function exportReport() {
-            showNotification('Rapor dışa aktarılıyor...', 'info');
-            setTimeout(() => {
-                showNotification('Rapor başarıyla dışa aktarıldı!', 'success');
-            }, 2000);
+            // Aktif rapor sekmesini bul
+            const activeTab = document.querySelector('.report-tab.active');
+            if (!activeTab) {
+                showNotification('Önce bir rapor oluşturun!', 'error');
+                return;
+            }
+
+            const reportType = activeTab.getAttribute('data-report');
+            let reportData = [];
+            let fileName = '';
+
+            // Rapor türüne göre veri hazırla
+            switch(reportType) {
+                case 'sales':
+                    reportData = generateSalesReportData();
+                    fileName = `satis_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    break;
+                case 'customers':
+                    reportData = generateCustomersReportData();
+                    fileName = `musteri_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    break;
+                case 'products':
+                    reportData = generateProductsReportData();
+                    fileName = `urun_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    break;
+                case 'inventory':
+                    reportData = generateInventoryReportData();
+                    fileName = `stok_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+                    break;
+                default:
+                    showNotification('Bilinmeyen rapor türü!', 'error');
+                    return;
+            }
+
+            if (reportData.length === 0) {
+                showNotification('Dışa aktarılacak veri bulunamadı!', 'error');
+                return;
+            }
+
+            // CSV dosyasını oluştur ve indir
+            downloadCSV(reportData, fileName);
+            showNotification('Rapor başarıyla dışa aktarıldı!', 'success');
+        }
+
+        function generateSalesReportData() {
+            const orders = loadOrdersData();
+            const reportData = [
+                ['Sipariş ID', 'Müşteri', 'Ürünler', 'Toplam Tutar', 'Durum', 'Tarih']
+            ];
+
+            orders.forEach(order => {
+                const products = order.products.map(p => p.name).join(', ');
+                reportData.push([
+                    order.id,
+                    order.customer,
+                    products,
+                    `₺${order.total.toLocaleString()}`,
+                    order.status,
+                    order.date
+                ]);
+            });
+
+            return reportData;
+        }
+
+        function generateCustomersReportData() {
+            const customers = loadCustomersData();
+            const reportData = [
+                ['Müşteri ID', 'Ad Soyad', 'E-posta', 'Telefon', 'Durum', 'Kayıt Tarihi', 'Toplam Sipariş']
+            ];
+
+            customers.forEach(customer => {
+                reportData.push([
+                    customer.id,
+                    customer.name,
+                    customer.email,
+                    customer.phone,
+                    customer.status,
+                    customer.registrationDate,
+                    customer.totalOrders || 0
+                ]);
+            });
+
+            return reportData;
+        }
+
+        function generateProductsReportData() {
+            const products = loadAdvancedProductsData();
+            const reportData = [
+                ['Ürün ID', 'Ürün Adı', 'SKU', 'Kategori', 'Fiyat', 'Stok', 'Durum', 'Öne Çıkan']
+            ];
+
+            products.forEach(product => {
+                reportData.push([
+                    product.id,
+                    product.name,
+                    product.sku,
+                    product.category,
+                    `₺${product.price.toLocaleString()}`,
+                    product.stock,
+                    product.status,
+                    product.featured ? 'Evet' : 'Hayır'
+                ]);
+            });
+
+            return reportData;
+        }
+
+        function generateInventoryReportData() {
+            const products = loadAdvancedProductsData();
+            const reportData = [
+                ['Ürün ID', 'Ürün Adı', 'SKU', 'Kategori', 'Mevcut Stok', 'Kritik Stok', 'Durum', 'Son Güncelleme']
+            ];
+
+            products.forEach(product => {
+                const stockStatus = product.stock <= 5 ? 'Kritik' : product.stock <= 20 ? 'Düşük' : 'Normal';
+                reportData.push([
+                    product.id,
+                    product.name,
+                    product.sku,
+                    product.category,
+                    product.stock,
+                    product.stock <= 5 ? 'Evet' : 'Hayır',
+                    stockStatus,
+                    product.updatedAt || new Date().toISOString().split('T')[0]
+                ]);
+            });
+
+            return reportData;
+        }
+
+        function downloadCSV(data, fileName) {
+            // CSV içeriğini oluştur
+            const csvContent = data.map(row => 
+                row.map(cell => `"${cell}"`).join(',')
+            ).join('\n');
+
+            // BOM ekle (Türkçe karakterler için)
+            const BOM = '\uFEFF';
+            const csvContentWithBOM = BOM + csvContent;
+
+            // Blob oluştur
+            const blob = new Blob([csvContentWithBOM], { 
+                type: 'text/csv;charset=utf-8;' 
+            });
+
+            // Download link oluştur
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', fileName);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // URL'yi temizle
+            URL.revokeObjectURL(url);
         }
     </script>
 
