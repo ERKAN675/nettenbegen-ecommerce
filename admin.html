@@ -10434,7 +10434,16 @@
             loadCustomersReport();
             loadProductsReport();
             loadCategoriesReport();
-            showReportTab('sales');
+            
+            // İlk rapor sekmesini aktif yap ve yükle
+            const firstTab = document.querySelector('.report-tabs .tab-btn');
+            if (firstTab) {
+                firstTab.classList.add('active');
+                const reportType = firstTab.getAttribute('data-report');
+                if (reportType) {
+                    showReportTab(reportType);
+                }
+            }
         }
 
         function loadSalesReport() {
@@ -10562,6 +10571,9 @@
                     reportContent.innerHTML = generateInventoryReport();
                     break;
             }
+            
+            // Rapor oluşturulduğunu bildir
+            showNotification(`${tabName.charAt(0).toUpperCase() + tabName.slice(1)} raporu oluşturuldu!`, 'success');
         }
 
         function generateSalesReport() {
@@ -10727,39 +10739,55 @@
         }
 
         function generateReport() {
-            showNotification('Rapor oluşturuluyor...', 'info');
-            setTimeout(() => {
-                showNotification('Rapor başarıyla oluşturuldu!', 'success');
-            }, 2000);
+            // Aktif rapor sekmesini bul
+            const activeTab = document.querySelector('.report-tabs .tab-btn.active');
+            if (!activeTab) {
+                // Eğer aktif sekme yoksa ilk sekmeyi aktif yap
+                const firstTab = document.querySelector('.report-tabs .tab-btn');
+                if (firstTab) {
+                    firstTab.classList.add('active');
+                    const reportType = firstTab.getAttribute('data-report');
+                    if (reportType) {
+                        showReportTab(reportType);
+                    }
+                }
+            } else {
+                // Aktif sekmeyi yeniden oluştur
+                const reportType = activeTab.getAttribute('data-report');
+                if (reportType) {
+                    showReportTab(reportType);
+                }
+            }
+            
+            showNotification('Rapor başarıyla oluşturuldu!', 'success');
         }
 
         function exportReport() {
             // Aktif rapor sekmesini bul
-            const activeTab = document.querySelector('.report-tab.active');
+            const activeTab = document.querySelector('.report-tabs .tab-btn.active');
             if (!activeTab) {
-                showNotification('Önce bir rapor oluşturun!', 'error');
+                showNotification('Önce bir rapor sekmesi seçin!', 'error');
                 return;
             }
 
             const reportType = activeTab.getAttribute('data-report');
-            let fileName = '';
+            if (!reportType) {
+                showNotification('Rapor türü belirlenemedi!', 'error');
+                return;
+            }
 
-            // Rapor türüne göre dosya adı belirle
+            // Rapor türüne göre PDF oluştur
             switch(reportType) {
                 case 'sales':
-                    fileName = `satis_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
                     generateSalesPDF();
                     break;
                 case 'customers':
-                    fileName = `musteri_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
                     generateCustomersPDF();
                     break;
                 case 'products':
-                    fileName = `urun_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
                     generateProductsPDF();
                     break;
                 case 'inventory':
-                    fileName = `stok_raporu_${new Date().toISOString().split('T')[0]}.pdf`;
                     generateInventoryPDF();
                     break;
                 default:
