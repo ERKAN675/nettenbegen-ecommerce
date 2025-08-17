@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝓗𝓪𝓯𝓽𝓪𝓷ı𝓷 𝓕ı𝓻𝓼𝓪𝓽𝓵𝓪𝓻ı | 𝓝𝓮𝓽𝓽𝓮𝓷𝓫𝓮𝓰𝓮𝓷</title>
+    <meta name="description" content="Haftanın en iyi fırsatları ve indirimli ürünler - Nettenbegen">
+    <link rel="icon" type="image/png" href="nettenbegen.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff6b35;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .offer-card:hover::before {
+            left: 100%;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #ff6b35;
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ff6b35;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .offer-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .offer-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .offer-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .offer-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .old-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 1.1rem;
+        }
+
+        .new-price {
+            color: #ff6b35;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .discount-percent {
+            background: #ff6b35;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .offer-button {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .offer-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .countdown-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .countdown-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .offers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-timer {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 1rem;
+            }
+
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="nettenbegen.png" alt="Nettenbegen Logo">
+                <span class="logo-text">𝓝𝓮𝓽𝓽𝓮𝓷𝓫𝓮𝓰𝓮𝓷</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>𝓗𝓪𝓯𝓽𝓪𝓷ı𝓷 𝓕ı𝓻𝓼𝓪𝓽𝓵𝓪𝓻ı</h1>
+                <p>Bu hafta özel olarak seçtiğimiz en iyi fırsatları kaçırmayın!</p>
+            </div>
+
+            <!-- Countdown Section -->
+            <div class="countdown-section">
+                <h2 class="countdown-title">Fırsatların Bitişine Kalan Süre</h2>
+                <div class="countdown-timer" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Gün</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Saat</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Dakika</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Saniye</span>
+                    </div>
+                </div>
+                <p>Bu fırsatlar sadece bu hafta geçerli! Hemen alışverişe başlayın.</p>
+            </div>
+
+            <!-- Offers Grid -->
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <div class="offer-badge">%50 İndirim</div>
+                    <div class="offer-image">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="offer-title">Elektronik Ürünler</h3>
+                    <p class="offer-description">Telefon, tablet ve diğer elektronik ürünlerde büyük indirim fırsatı!</p>
+                    <div class="offer-price">
+                        <span class="old-price">2000₺</span>
+                        <span class="new-price">1000₺</span>
+                        <span class="discount-percent">%50</span>
+                    </div>
+                    <button class="offer-button">Hemen Al</button>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">%40 İndirim</div>
+                    <div class="offer-image">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3 class="offer-title">Giyim & Moda</h3>
+                    <p class="offer-description">En trend giyim ürünleri ve aksesuarlarda özel fiyatlar!</p>
+                    <div class="offer-price">
+                        <span class="old-price">500₺</span>
+                        <span class="new-price">300₺</span>
+                        <span class="discount-percent">%40</span>
+                    </div>
+                    <button class="offer-button">Hemen Al</button>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">%60 İndirim</div>
+                    <div class="offer-image">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="offer-title">Ev & Yaşam</h3>
+                    <p class="offer-description">Ev dekorasyon ve yaşam ürünlerinde süper indirimler!</p>
+                    <div class="offer-price">
+                        <span class="old-price">800₺</span>
+                        <span class="new-price">320₺</span>
+                        <span class="discount-percent">%60</span>
+                    </div>
+                    <button class="offer-button">Hemen Al</button>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">%30 İndirim</div>
+                    <div class="offer-image">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="offer-title">Kitap & Kırtasiye</h3>
+                    <p class="offer-description">Eğitim ve kırtasiye ürünlerinde özel fırsatlar!</p>
+                    <div class="offer-price">
+                        <span class="old-price">200₺</span>
+                        <span class="new-price">140₺</span>
+                        <span class="discount-percent">%30</span>
+                    </div>
+                    <button class="offer-button">Hemen Al</button>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">%45 İndirim</div>
+                    <div class="offer-image">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="offer-title">Oyun & Hobi</h3>
+                    <p class="offer-description">Oyun konsolları ve hobi ürünlerinde büyük indirim!</p>
+                    <div class="offer-price">
+                        <span class="old-price">1500₺</span>
+                        <span class="new-price">825₺</span>
+                        <span class="discount-percent">%45</span>
+                    </div>
+                    <button class="offer-button">Hemen Al</button>
+                </div>
+
+                <div class="offer-card">
+                    <div class="offer-badge">%35 İndirim</div>
+                    <div class="offer-image">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="offer-title">Sağlık & Spor</h3>
+                    <p class="offer-description">Sağlık ve spor ürünlerinde özel fiyatlar!</p>
+                    <div class="offer-price">
+                        <span class="old-price">400₺</span>
+                        <span class="new-price">260₺</span>
+                        <span class="discount-percent">%35</span>
+                    </div>
+                    <button class="offer-button">Hemen Al</button>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div style="text-align: center;">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const endOfWeek = new Date();
+            endOfWeek.setHours(23, 59, 59, 999);
+            endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()));
+            
+            const distance = endOfWeek - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Offer button click handlers
+        document.querySelectorAll('.offer-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Bu özellik yakında aktif olacak! Şimdilik ana sayfadaki ürünleri inceleyebilirsiniz.');
+            });
+        });
+    </script>
+</body>
+</html>
+

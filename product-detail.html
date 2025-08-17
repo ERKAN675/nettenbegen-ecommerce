@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı | Nettenbegen</title>
+    <meta name="description" content="Nettenbegen'de kaliteli ürünler, uygun fiyatlar ve hızlı teslimat. Beğeneceğiniz sanal market.">
+    <meta name="keywords" content="e-ticaret, online alışveriş, nettenbegen, ürün detayı">
+    <meta property="og:title" content="Ürün Detayı - Nettenbegen">
+    <meta property="og:description" content="Nettenbegen'de kaliteli ürünler, uygun fiyatlar ve hızlı teslimat.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.nettenbegen.com">
+    <link rel="icon" href="nettenbegen.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 120px;
+            width: auto;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 0.85cm;
+            justify-content: flex-end;
+        }
+
+        nav ul li {
+            margin: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff6b35;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Categories dropdown constrained width */
+        .categories-dropdown { position: relative; }
+        .categories-dropdown > a { display: inline-block; }
+        .categories-dropdown .dropdown-menu {
+            left: 50%;
+            transform: translate(-50%, -10px);
+            width: max-content;
+            min-width: 140px;
+            max-width: 200px;
+        }
+        .categories-dropdown .dropdown-menu li a { white-space: nowrap; }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        /* Sadece Kategoriler menüsü için hover'da ortalama */
+        .categories-dropdown:hover .dropdown-menu {
+            transform: translate(-50%, 0);
+        }
+
+        .dropdown-menu li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-menu li:last-child a {
+            border-bottom: none;
+        }
+
+        .dropdown-menu li a:hover {
+            background: #f8f9fa;
+            color: #ff6b35;
+            padding-left: 1.5rem;
+        }
+
+        .dropdown > a i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+
+        /* User Menu Dropdown */
+        .user-menu-dropdown {
+            position: relative;
+        }
+
+        .user-icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 0;
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            padding: 0 2px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .user-icon-btn:hover {
+            color: #ff6b35;
+            transform: none;
+        }
+
+        .user-dropdown-menu {
+            left: 50%;
+            transform: translate(-50%, -10px);
+            min-width: 160px;
+            top: calc(100% + 10px);
+        }
+
+        .user-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 0.9rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-dropdown-menu li a:hover {
+            background: #f8f9fa;
+            color: #ff6b35;
+            padding-left: 1rem;
+        }
+
+        .user-dropdown-menu li a i {
+            font-size: 1rem;
+            width: 18px;
+        }
+        
+        /* Kullanıcı ve sepet ikonunu birlikte çok hafif aşağı kaydır */
+        .user-menu-dropdown,
+        .cart-icon {
+            position: relative;
+            top: 2px;
+        }
+        
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+                 .cart-count:empty,
+         .cart-count:contains("0") {
+             display: none;
+         }
+         
+         /* Favorites Icon */
+         .favorites-icon {
+             position: relative;
+             cursor: pointer;
+         }
+         
+         .favorites-icon i {
+             font-size: 1.5rem;
+             color: white;
+         }
+         
+         .favorites-count {
+             position: absolute;
+             top: -8px;
+             right: -8px;
+             background: #e74c3c;
+             color: white;
+             border-radius: 50%;
+             width: 20px;
+             height: 20px;
+             font-size: 0.8rem;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             font-weight: bold;
+         }
+         
+         .favorites-count:empty,
+         .favorites-count:contains("0") {
+             display: none;
+         }
+
+        /* Product Detail Styles */
+        .product-detail-container {
+            background: white;
+            margin: 160px auto 2rem auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1000px;
+        }
+
+        .product-detail-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .product-detail-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .product-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 3rem;
+        }
+
+        .product-images {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .thumbnail-images {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .product-info-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffd700;
+        }
+
+        .rating-text {
+            color: #666;
+        }
+
+        .product-price-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .original-price {
+            font-size: 1.5rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .product-description {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .product-features-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-tag-detail {
+            background: #f8f9fa;
+            color: #ff6b35;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .product-actions-detail {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            border-color: #ff6b35;
+            color: #ff6b35;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .product-specs {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .specs-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .spec-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .spec-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Related Products */
+        .related-products {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 1000px;
+        }
+
+        .related-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .related-product {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .related-product:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .related-product-info {
+            padding: 1rem;
+        }
+
+        .related-product-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-product-price {
+            color: #ff6b35;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3, .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff6b35;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-detail-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
+            }
+
+            .product-detail-header h1 {
+                font-size: 2rem;
+            }
+
+            .product-actions-detail {
+                flex-direction: column;
+            }
+
+            .related-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="nettenbegen.png" alt="Nettenbegen Logo">
+                <span class="logo-text">𝓝𝓮𝓽𝓽𝓮𝓷𝓫𝓮𝓰𝓮𝓷</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li class="dropdown categories-dropdown">
+                        <a href="#">Kategoriler <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="category-electronics.html">Elektronik</a></li>
+                            <li><a href="category-home.html">Ev & Yaşam</a></li>
+                            <li><a href="category-books.html">Kitap & Hobi</a></li>
+                            <li><a href="category-toys.html">Oyuncak</a></li>
+                            <li><a href="category-baby.html">Anne & Bebek</a></li>
+                            <li><a href="category-flowers.html">Çiçek</a></li>
+                            <li><a href="category-beads.html">Boncuk & Taş</a></li>
+                            <li><a href="category-invitations.html">Davetiyeler</a></li>
+                            <li><a href="category-decoration.html">Süsleme Malzemeleri</a></li>
+                            <li><a href="category-stationery.html">Kırtasiye & Okul</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown corporate-dropdown">
+                        <a href="#">Kurumsal <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">Hakkımızda</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-button-item">
+                        <div class="user-menu-dropdown dropdown">
+                            <a href="#" class="user-icon-btn">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <ul class="user-dropdown-menu dropdown-menu">
+                                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                                <li><a href="register.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                                         <li class="nav-button-item">
+                         <div class="favorites-icon" onclick="openFavorites()">
+                             <i class="fas fa-heart"></i>
+                             <span class="favorites-count" id="favoritesCount">0</span>
+                         </div>
+                     </li>
+                     <li class="nav-button-item">
+                         <div class="cart-icon" onclick="openCart()">
+                             <i class="fas fa-shopping-cart"></i>
+                             <span class="cart-count" id="cartCount">0</span>
+                         </div>
+                     </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Product Detail -->
+    <div class="container">
+        <div class="product-detail-container">
+            <div class="product-detail-header">
+                                 <div class="breadcrumb">
+                     <a href="index.html">Ana Sayfa</a>
+                     <i class="fas fa-chevron-right"></i>
+                     <a href="products.html">Ürünler</a>
+                     <i class="fas fa-chevron-right"></i>
+                     <a href="#" id="productCategoryLink">Kategori</a>
+                     <i class="fas fa-chevron-right"></i>
+                     <span id="productName">Ürün Adı</span>
+                 </div>
+                <h1 id="productTitle">Ürün Adı</h1>
+            </div>
+
+            <div class="product-detail-content">
+                <div class="product-images">
+                    <img id="mainImage" class="main-image" src="" alt="">
+                    <div class="thumbnail-images">
+                        <img class="thumbnail" src="" alt="" onclick="changeMainImage(this.src)">
+                        <img class="thumbnail" src="" alt="" onclick="changeMainImage(this.src)">
+                        <img class="thumbnail" src="" alt="" onclick="changeMainImage(this.src)">
+                    </div>
+                </div>
+
+                <div class="product-info-detail">
+                    <h2 class="product-title" id="detailProductTitle">Ürün Adı</h2>
+                    
+                    <div class="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">4.5 (128 değerlendirme)</span>
+                    </div>
+
+                    <div class="product-price-detail">
+                        <span class="current-price" id="detailCurrentPrice">₺0</span>
+                        <span class="original-price" id="detailOriginalPrice">₺0</span>
+                        <span class="discount-badge" id="detailDiscountBadge">%0 İndirim</span>
+                    </div>
+
+                    <p class="product-description" id="detailDescription">
+                        Ürün açıklaması burada yer alacak...
+                    </p>
+
+                    <div class="product-features-detail" id="detailFeatures">
+                        <!-- Features will be populated by JavaScript -->
+                    </div>
+
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                        <input type="number" class="quantity-input" id="quantityInput" value="1" min="1" max="99">
+                        <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                    </div>
+
+                    <div class="product-actions-detail">
+                        <button class="btn btn-primary" onclick="addToCartDetail()">
+                            <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                        </button>
+                        <button class="btn btn-secondary" onclick="addToWishlist()">
+                            <i class="fas fa-heart"></i> Favorilere Ekle
+                        </button>
+                    </div>
+
+                    <div class="product-specs">
+                        <h3 class="specs-title">Ürün Özellikleri</h3>
+                        <div class="specs-grid" id="productSpecs">
+                            <!-- Specs will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-products">
+            <h3 class="related-title">Benzer Ürünler</h3>
+            <div class="related-grid" id="relatedProducts">
+                <!-- Related products will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Nettenbegen</h3>
+                    <p>Beğeneceğiniz sanal market. Kaliteli ürünler, uygun fiyatlar ve hızlı teslimat.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/nettenbegen" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/nettenbegen" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/nettenbegen" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/nettenbegen" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Kategoriler</h4>
+                    <ul>
+                        <li><a href="category-electronics.html">Elektronik</a></li>
+                        <li><a href="category-home.html">Ev & Yaşam</a></li>
+                        <li><a href="category-books.html">Kitap & Hobi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Destek</h4>
+                    <ul>
+                        <li><a href="contact.html">İletişim</a></li>
+                        <li><a href="contact.html">Teknik Destek</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Şirket</h4>
+                    <ul>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                        <li><a href="contact.html">Gizlilik</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nettenbegen. Tüm hakları saklıdır. | www.nettenbegen.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Product data - this would normally come from a database
+        const productDatabase = {
+            'akilli-telefon': {
+                name: 'Akıllı Telefon',
+                category: 'Elektronik',
+                currentPrice: 4999,
+                originalPrice: 7199,
+                discount: 30,
+                description: 'En son teknoloji ile donatılmış akıllı telefon. Yüksek performans, uzun pil ömrü ve mükemmel kamera kalitesi. 5G desteği ile hızlı internet deneyimi yaşayın.',
+                features: ['128GB Depolama', '48MP Kamera', '5G Destekli', 'Uzun Pil Ömrü', 'Su Geçirmez'],
+                specs: {
+                    'Ekran': '6.7 inch OLED',
+                    'İşlemci': 'Snapdragon 8 Gen 2',
+                    'RAM': '8GB',
+                    'Depolama': '128GB',
+                    'Kamera': '48MP + 12MP + 12MP',
+                    'Pil': '4500mAh',
+                    'İşletim Sistemi': 'Android 14',
+                    'Garanti': '2 Yıl'
+                },
+                                 images: [
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Akıllı+Telefon+1',
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Akıllı+Telefon+2',
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Akıllı+Telefon+3'
+                 ],
+                rating: 4.5,
+                reviews: 128
+            },
+            'gaming-laptop': {
+                name: 'Gaming Laptop',
+                category: 'Elektronik',
+                currentPrice: 12999,
+                originalPrice: 17299,
+                discount: 25,
+                description: 'Yüksek performanslı gaming laptop. RTX grafik kartı, hızlı işlemci ve geniş depolama alanı ile oyun deneyiminizi en üst seviyeye çıkarın.',
+                features: ['RTX 4060', '16GB RAM', '512GB SSD', '144Hz Ekran', 'RGB Klavye'],
+                specs: {
+                    'Ekran': '15.6 inch 144Hz',
+                    'İşlemci': 'Intel i7-12700H',
+                    'RAM': '16GB DDR4',
+                    'Depolama': '512GB NVMe SSD',
+                    'Grafik Kartı': 'RTX 4060 8GB',
+                    'Pil': '6 Saat',
+                    'İşletim Sistemi': 'Windows 11',
+                    'Garanti': '2 Yıl'
+                },
+                                 images: [
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Gaming+Laptop+1',
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Gaming+Laptop+2',
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Gaming+Laptop+3'
+                 ],
+                rating: 4.7,
+                reviews: 89
+            },
+            'akilli-saat': {
+                name: 'Akıllı Saat',
+                category: 'Ev & Yaşam',
+                currentPrice: 899,
+                originalPrice: 1299,
+                discount: 31,
+                description: 'Fitness takibi ve sağlık monitörü özellikli akıllı saat. Su geçirmez ve uzun pil ömrü ile günlük aktivitelerinizi takip edin.',
+                features: ['Kalp Atış Hızı', 'GPS Takip', 'Su Geçirmez', '7 Gün Pil', 'Spor Modları'],
+                specs: {
+                    'Ekran': '1.4 inch AMOLED',
+                    'Pil Ömrü': '7 Gün',
+                    'Su Geçirmezlik': '5ATM',
+                    'Sensörler': 'Kalp Atış, GPS, Akselerometre',
+                    'Uyumluluk': 'iOS/Android',
+                    'Garanti': '1 Yıl'
+                },
+                images: [
+                    'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Akıllı+Saat+1',
+                    'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Akıllı+Saat+2',
+                    'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Akıllı+Saat+3'
+                ],
+                rating: 4.3,
+                reviews: 156
+            },
+            'puzzle-seti': {
+                name: 'Puzzle Seti',
+                category: 'Kitap & Hobi',
+                currentPrice: 89,
+                originalPrice: 119,
+                discount: 20,
+                description: '1000 parça puzzle seti. Aile ile keyifli vakit geçirmek için ideal. Kaliteli malzeme ve detaylı görseller ile uzun süre keyif alacağınız bir aktivite.',
+                features: ['1000 Parça', 'Ahşap Kutu', 'Aile Oyunu', 'Detaylı Görseller', 'Kaliteli Malzeme'],
+                specs: {
+                    'Parça Sayısı': '1000 Adet',
+                    'Malzeme': 'Kaliteli Karton',
+                    'Kutu': 'Ahşap Kutu',
+                    'Yaş Grubu': '12+',
+                    'Boyut': '50x70 cm',
+                    'Garanti': '1 Yıl'
+                },
+                                 images: [
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Puzzle+Seti+1',
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Puzzle+Seti+2',
+                     'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Puzzle+Seti+3'
+                 ],
+                rating: 4.2,
+                reviews: 67
+            },
+            'egitici-blok-seti': {
+                name: 'Eğitici Blok Seti',
+                category: 'Oyuncak',
+                currentPrice: 349,
+                originalPrice: 409,
+                discount: 15,
+                description: 'Motor becerilerini geliştiren, kaliteli ve güvenli malzemeden oyuncak seti. Çocukların yaratıcılığını ve problem çözme yeteneklerini geliştirir.',
+                features: ['3+ Yaş', '120 Parça', 'BPA Free', 'Eğitici', 'Güvenli Malzeme'],
+                specs: {
+                    'Yaş Grubu': '3+ Yaş',
+                    'Parça Sayısı': '120 Adet',
+                    'Malzeme': 'BPA Free Plastik',
+                    'Renkler': 'Çok Renkli',
+                    'Kutu Boyutu': '30x25x10 cm',
+                    'Garanti': '1 Yıl'
+                },
+                images: [
+                    'https://via.placeholder.com/600x400/00f2fe/ffffff?text=Eğitici+Blok+1',
+                    'https://via.placeholder.com/600x400/00f2fe/ffffff?text=Eğitici+Blok+2',
+                    'https://via.placeholder.com/600x400/00f2fe/ffffff?text=Eğitici+Blok+3'
+                ],
+                rating: 4.6,
+                reviews: 93
+            },
+            'gul-buketi': {
+                name: 'Gül Buketi',
+                category: 'Çiçek',
+                currentPrice: 499,
+                originalPrice: 499,
+                discount: 0,
+                description: 'Özel günler için taze ve özenle hazırlanmış 11\'li gül buketi. Romantik anlarınızı unutulmaz kılacak şık tasarım.',
+                features: ['Canlı Çiçek', 'Hızlı Teslimat', 'Hediye Notu', '11 Adet Gül', 'Şık Paket'],
+                specs: {
+                    'Çiçek Türü': 'Kırmızı Gül',
+                    'Adet': '11 Adet',
+                    'Paket': 'Şık Buket',
+                    'Teslimat': 'Aynı Gün',
+                    'Hediye Notu': 'Ücretsiz',
+                    'Garanti': 'Taze Çiçek'
+                },
+                images: [
+                    'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Gül+Buketi+1',
+                    'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Gül+Buketi+2',
+                    'https://via.placeholder.com/600x400/ff6b35/ffffff?text=Gül+Buketi+3'
+                ],
+                rating: 4.8,
+                reviews: 234
+            },
+            'dugun-davetiyesi': {
+                name: 'Düğün Davetiyesi',
+                category: 'Davetiyeler',
+                currentPrice: 3.49,
+                originalPrice: 4.49,
+                discount: 22,
+                description: 'Şık tasarımlı davetiye modeli. Kişiselleştirilebilir isim ve tarih. Özel günleriniz için profesyonel görünüm.',
+                features: ['Kişiye Özel', 'Kaliteli Kağıt', 'Hızlı Baskı', 'Şık Tasarım', 'Çoklu Seçenek'],
+                specs: {
+                    'Kağıt Kalitesi': '300 gr Kuşe',
+                    'Baskı': 'Dijital Baskı',
+                    'Boyut': 'A5',
+                    'Kişiselleştirme': 'İsim ve Tarih',
+                    'Teslimat': '3-5 İş Günü',
+                    'Minimum Sipariş': '50 Adet'
+                },
+                images: [
+                    'https://via.placeholder.com/600x400/4caf50/ffffff?text=Davetiye+1',
+                    'https://via.placeholder.com/600x400/4caf50/ffffff?text=Davetiye+2',
+                    'https://via.placeholder.com/600x400/4caf50/ffffff?text=Davetiye+3'
+                ],
+                rating: 4.4,
+                reviews: 45
+            }
+        };
+
+                 // Cart and Favorites functionality
+         let cart = [];
+         let favorites = [];
+
+                 // Load cart and favorites from localStorage
+         document.addEventListener('DOMContentLoaded', function() {
+             loadCartFromStorage();
+             loadFavoritesFromStorage();
+             loadProductDetails();
+         });
+
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('nettenbegenCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+        }
+
+        function saveCartToStorage() {
+            localStorage.setItem('nettenbegenCart', JSON.stringify(cart));
+        }
+
+                 function updateCartCount() {
+             const totalItems = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+             document.getElementById('cartCount').textContent = totalItems;
+         }
+         
+         function loadFavoritesFromStorage() {
+             const savedFavorites = localStorage.getItem('nettenbegenFavorites');
+             if (savedFavorites) {
+                 favorites = JSON.parse(savedFavorites);
+                 updateFavoritesCount();
+             }
+         }
+         
+         function saveFavoritesToStorage() {
+             localStorage.setItem('nettenbegenFavorites', JSON.stringify(favorites));
+         }
+         
+         function updateFavoritesCount() {
+             const totalFavorites = favorites.length;
+             document.getElementById('favoritesCount').textContent = totalFavorites;
+         }
+
+                 function openFavorites() {
+             if (favorites.length === 0) {
+                 alert('Favorileriniz boş!');
+                 return;
+             }
+             // Burada favori sayfasına yönlendirme yapılabilir
+             alert('Favorilerinizde ' + favorites.length + ' ürün bulunuyor!');
+         }
+         
+         function openCart() {
+             if (cart.length === 0) {
+                 alert('Sepetiniz boş!');
+                 return;
+             }
+             window.location.href = 'payment.html';
+         }
+
+        // Get product ID from URL
+        function getProductId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+                 // Category page mapping
+         const categoryPages = {
+             'Elektronik': 'category-electronics.html',
+             'Ev & Yaşam': 'category-home.html',
+             'Kitap & Hobi': 'category-books.html',
+             'Oyuncak': 'category-toys.html',
+             'Anne & Bebek': 'category-baby.html',
+             'Çiçek': 'category-flowers.html',
+             'Boncuk & Taş': 'category-beads.html',
+             'Davetiyeler': 'category-invitations.html',
+             'Süsleme Malzemeleri': 'category-decoration.html',
+             'Kırtasiye & Okul': 'category-stationery.html'
+         };
+
+         // Load product details
+         function loadProductDetails() {
+             const productId = getProductId();
+             const product = productDatabase[productId];
+
+            if (!product) {
+                // Redirect to products page if product not found
+                window.location.href = 'products.html';
+                return;
+            }
+
+            // Update page content
+            document.title = `${product.name} - Nettenbegen`;
+            document.getElementById('productTitle').textContent = product.name;
+            document.getElementById('detailProductTitle').textContent = product.name;
+                                      document.getElementById('productName').textContent = product.name;
+             document.getElementById('productCategoryLink').textContent = product.category;
+             
+             // Set category link
+             const categoryLink = document.getElementById('productCategoryLink');
+             const categoryPage = categoryPages[product.category];
+             if (categoryPage) {
+                 categoryLink.href = categoryPage;
+             }
+             
+             document.getElementById('detailDescription').textContent = product.description;
+            document.getElementById('detailCurrentPrice').textContent = `₺${product.currentPrice.toLocaleString()}`;
+            document.getElementById('detailOriginalPrice').textContent = `₺${product.originalPrice.toLocaleString()}`;
+            document.getElementById('detailDiscountBadge').textContent = `%${product.discount} İndirim`;
+
+            // Load images
+            const mainImage = document.getElementById('mainImage');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            
+            mainImage.src = product.images[0];
+            mainImage.alt = product.name;
+            mainImage.onerror = function() {
+                this.src = `https://via.placeholder.com/400x400/4facfe/ffffff?text=${encodeURIComponent(product.name)}`;
+            };
+
+            thumbnails.forEach((thumb, index) => {
+                if (product.images[index]) {
+                    thumb.src = product.images[index];
+                    thumb.alt = `${product.name} ${index + 1}`;
+                    thumb.onerror = function() {
+                        this.src = `https://via.placeholder.com/100x100/4facfe/ffffff?text=${encodeURIComponent(product.name)}`;
+                    };
+                }
+            });
+
+            // Load features
+            const featuresContainer = document.getElementById('detailFeatures');
+            featuresContainer.innerHTML = '';
+            product.features.forEach(feature => {
+                const featureTag = document.createElement('span');
+                featureTag.className = 'feature-tag-detail';
+                featureTag.textContent = feature;
+                featuresContainer.appendChild(featureTag);
+            });
+
+            // Load specs
+            const specsContainer = document.getElementById('productSpecs');
+            specsContainer.innerHTML = '';
+            Object.entries(product.specs).forEach(([key, value]) => {
+                const specItem = document.createElement('div');
+                specItem.className = 'spec-item';
+                specItem.innerHTML = `
+                    <span class="spec-label">${key}</span>
+                    <span class="spec-value">${value}</span>
+                `;
+                specsContainer.appendChild(specItem);
+            });
+
+            // Load related products
+            loadRelatedProducts(product.category, productId);
+        }
+
+        // Load related products
+        function loadRelatedProducts(category, currentProductId) {
+            const relatedContainer = document.getElementById('relatedProducts');
+            const relatedProducts = Object.entries(productDatabase)
+                .filter(([id, product]) => product.category === category && id !== currentProductId)
+                .slice(0, 4);
+
+            relatedContainer.innerHTML = '';
+            relatedProducts.forEach(([id, product]) => {
+                const productCard = document.createElement('div');
+                productCard.className = 'related-product';
+                productCard.innerHTML = `
+                    <img src="${product.images[0]}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200x150/4facfe/ffffff?text=${encodeURIComponent(product.name)}'">
+                    <div class="related-product-info">
+                        <div class="related-product-title">${product.name}</div>
+                        <div class="related-product-price">₺${product.currentPrice.toLocaleString()}</div>
+                    </div>
+                `;
+                productCard.onclick = () => window.location.href = `product-detail.html?id=${id}`;
+                relatedContainer.appendChild(productCard);
+            });
+        }
+
+        // Change main image
+        function changeMainImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+
+        // Change quantity
+        function changeQuantity(delta) {
+            const input = document.getElementById('quantityInput');
+            const newValue = Math.max(1, Math.min(99, parseInt(input.value) + delta));
+            input.value = newValue;
+        }
+
+        // Add to cart from detail page
+        function addToCartDetail() {
+            const productId = getProductId();
+            const product = productDatabase[productId];
+            const quantity = parseInt(document.getElementById('quantityInput').value);
+
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.name === product.name);
+            if (existingItem) {
+                existingItem.qty += quantity;
+            } else {
+                cart.push({
+                    name: product.name,
+                    price: product.currentPrice,
+                    qty: quantity
+                });
+            }
+
+            saveCartToStorage();
+            updateCartCount();
+            showNotification(`${product.name} sepete eklendi!`);
+        }
+
+                 // Add to wishlist
+         function addToWishlist() {
+             const productId = getProductId();
+             const product = productDatabase[productId];
+             
+             if (!product) return;
+ 
+             // Check if product is already in favorites
+             const existingFavorite = favorites.find(fav => fav.productId === productId);
+             
+             if (existingFavorite) {
+                 // Remove from favorites
+                 favorites = favorites.filter(fav => fav.productId !== productId);
+                 showNotification(`${product.name} favorilerden çıkarıldı!`);
+             } else {
+                 // Add to favorites
+                 favorites.push({
+                     productId: productId,
+                     name: product.name,
+                     price: product.currentPrice,
+                     image: product.images[0]
+                 });
+                 showNotification(`${product.name} favorilere eklendi!`);
+             }
+             
+             saveFavoritesToStorage();
+             updateFavoritesCount();
+         }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canlı Destek | Nettenbegen</title>
+  <link rel="icon" type="image/png" href="nettenbegen.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#333; background:#f7f9fb; }
+    header { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color:#fff; padding: 16px 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    h1 { margin: 0; font-size: 1.8rem; }
+    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 22px; margin: 24px 0; }
+    .card { background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.08); padding:18px; }
+    .form-group { margin-bottom:12px; }
+    label { display:block; font-weight:600; margin-bottom:6px; }
+    input, textarea { width:100%; padding:12px 14px; border:2px solid #e6ecf1; border-radius:10px; font-size:1rem; outline:none; transition:border-color .2s; }
+    input:focus, textarea:focus { border-color:#4facfe; }
+    textarea { resize: vertical; min-height: 120px; }
+    .btn { display:inline-flex; align-items:center; gap:8px; background:#4facfe; color:#fff; border:none; border-radius:10px; padding:12px 16px; cursor:pointer; font-weight:600; }
+    .btn:hover { background:#3d9bfe; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .faq h3 { margin-top:0; }
+    .faq-item { border-bottom:1px solid #eef2f6; padding: 10px 0; }
+    .faq-item summary { cursor:pointer; font-weight:600; }
+    .contact-ways { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; background:#f0f7ff; color:#357edd; text-decoration:none; font-weight:600; }
+    .pill:hover { background:#e3f0ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <ul style="display:flex; gap:18px; align-items:center; list-style:none; padding:0; margin:0;">
+          <li><a href="index.html" style="color:#fff; text-decoration:none; font-weight:700;">Ana Sayfa</a></li>
+          <li><a href="index.html#products" style="color:#fff; text-decoration:none; font-weight:700;">Ürünler</a></li>
+          <li><a href="about.html" style="color:#fff; text-decoration:none; font-weight:700;">Hakkımızda</a></li>
+          <li><a href="contact.html" style="color:#fff; text-decoration:none; font-weight:700;">İletişim</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <footer style="margin:30px 0 0; background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color:#fff;">
+    <div class="container" style="padding:16px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div>© 2025 Nettenbegen</div>
+      <div style="display:flex; gap:10px;">
+        <a href="https://www.facebook.com/nettenbegen" target="_blank" style="color:#fff"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/nettenbegen" target="_blank" style="color:#fff"><i class="fab fa-instagram"></i></a>
+        <a href="https://twitter.com/nettenbegen" target="_blank" style="color:#fff"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+  <main class="container">
+    <div class="grid">
+      <section class="card">
+        <h2>Bize Yazın</h2>
+        <form onsubmit="return sendLiveSupport(event)">
+          <div class="form-group">
+            <label for="name">Ad Soyad</label>
+            <input type="text" id="name" required placeholder="Adınız Soyadınız" />
+          </div>
+          <div class="form-group">
+            <label for="email">E-posta</label>
+            <input type="email" id="email" required placeholder="ornek@mail.com" />
+          </div>
+          <div class="form-group">
+            <label for="message">Mesajınız</label>
+            <textarea id="message" required placeholder="Merhaba, şununla ilgili desteğe ihtiyacım var..."></textarea>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Gönder</button>
+            <a class="pill" href="https://wa.me/905444565068" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a class="pill" href="mailto:nettenbegen9@gmail.com"><i class="fas fa-envelope"></i> E‑posta</a>
+          </div>
+        </form>
+      </section>
+
+      <aside class="card faq">
+        <h3>Hızlı Yardım</h3>
+        <div class="faq-item">
+          <details>
+            <summary>Kargo ne zaman gelir?</summary>
+            <p>Şehir içi aynı gün, diğer illere 1‑3 iş günü içinde teslim edilir.</p>
+          </details>
+        </div>
+        <div class="faq-item">
+          <details>
+            <summary>İade politikası nedir?</summary>
+            <p>14 gün içerisinde koşulsuz iade hakkınız vardır. Lütfen paket ve faturayı saklayın.</p>
+          </details>
+        </div>
+        <div class="faq-item">
+          <details>
+            <summary>Canlı destek saatleri</summary>
+            <p>Hafta içi 09:00‑18:00, Cumartesi 10:00‑14:00 arası çevrimiçiyiz.</p>
+          </details>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    function sendLiveSupport(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if (!name || !email || !msg) return false;
+      const text = `Canlı Destek Talebi%0A%0AAd: ${encodeURIComponent(name)}%0AE-posta: ${encodeURIComponent(email)}%0AMesaj: ${encodeURIComponent(msg)}`;
+      window.open(`https://wa.me/905444565068?text=${text}`, '_blank');
+      alert('Talebiniz gönderildi! En kısa sürede dönüş yapacağız.');
+      e.target.reset();
+      return false;
+    }
+  </script>
+</body>
+</html>

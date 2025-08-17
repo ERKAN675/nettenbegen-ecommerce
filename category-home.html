@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ev & Yaşam Ürünleri | Nettenbegen</title>
+    <meta name="description" content="Nettenbegen ev & yaşam ürünleri - Akıllı saatler, ev aletleri ve daha fazlası.">
+    <meta name="keywords" content="ev yaşam, akıllı saat, ev aletleri, nettenbegen">
+    <meta name="author" content="Nettenbegen">
+    <meta property="og:title" content="Ev & Yaşam Ürünleri | Nettenbegen">
+    <meta property="og:description" content="Eviniz için kaliteli ürünler, uygun fiyatlar ve hızlı teslimat.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.nettenbegen.com/category-home">
+    <link rel="icon" type="image/png" href="nettenbegen.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 120px;
+            width: auto;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 0.85cm;
+            justify-content: flex-end;
+        }
+
+        nav ul li {
+            margin: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff6b35;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            padding: 1rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        /* Categories dropdown constrained width */
+        .categories-dropdown { position: relative; }
+        .categories-dropdown > a { display: inline-block; }
+        .categories-dropdown .dropdown-menu {
+            left: 50%;
+            transform: translate(-50%, -10px);
+            width: max-content;
+            min-width: 160px;
+            max-width: 240px;
+        }
+        .categories-dropdown:hover .dropdown-menu {
+            transform: translate(-50%, 0);
+        }
+        .categories-dropdown .dropdown-menu li a { white-space: nowrap; }
+
+        /* Corporate dropdown centering */
+        .corporate-dropdown { position: relative; }
+        .corporate-dropdown > a { display: inline-block; }
+        .corporate-dropdown .dropdown-menu {
+            left: 50%;
+            transform: translate(-50%, -10px);
+            width: max-content;
+            min-width: 160px;
+            max-width: 240px;
+        }
+        .corporate-dropdown:hover .dropdown-menu { transform: translate(-50%, 0); }
+
+        .dropdown-menu li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-menu li:last-child a {
+            border-bottom: none;
+        }
+
+        .dropdown-menu li a:hover {
+            background: #f8f9fa;
+            color: #ff6b35;
+            padding-left: 2rem;
+        }
+
+        .dropdown > a i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+
+        .nav-button-item {
+            display: flex;
+            align-items: center;
+        }
+
+        /* User Menu Dropdown */
+        .user-menu-dropdown {
+            position: relative;
+        }
+
+        .user-icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            padding: 0 2px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .user-icon-btn i {
+            display: block;
+            line-height: 1;
+            transform: translateY(0.5px);
+        }
+
+        .user-dropdown-menu {
+            left: 50%;
+            transform: translate(-50%, -10px);
+            min-width: 160px;
+            top: calc(100% + 10px);
+        }
+
+        .user-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-dropdown-menu li a:hover {
+            background: #f8f9fa;
+            color: #ff6b35;
+            padding-left: 1.2rem;
+        }
+
+        .user-dropdown-menu li a i {
+            font-size: 1rem;
+            width: 18px;
+        }
+
+        .user-menu-dropdown,
+        .cart-icon {
+            position: relative;
+            top: 2px;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Category Header */
+        .category-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+        }
+
+        .category-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .category-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.14);
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            display: block;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.06);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff6b35;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .original-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: #4facfe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3d9bfe;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e7e7e7;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 2rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ff6b35;
+        }
+
+        .footer-bottom {
+            background: rgba(0,0,0,0.2);
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-bottom p {
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="nettenbegen.png" alt="Nettenbegen Logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li class="dropdown categories-dropdown">
+                        <a href="#">Kategoriler <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="category-electronics.html">Elektronik</a></li>
+                            <li><a href="category-home.html">Ev & Yaşam</a></li>
+                            <li><a href="category-books.html">Kitap & Hobi</a></li>
+                            <li><a href="category-toys.html">Oyuncak</a></li>
+                            <li><a href="category-baby.html">Anne & Bebek</a></li>
+                            <li><a href="category-flowers.html">Çiçek</a></li>
+                            <li><a href="category-beads.html">Boncuk & Taş</a></li>
+                            <li><a href="category-invitations.html">Davetiyeler</a></li>
+                            <li><a href="category-decoration.html">Süsleme Malzemeleri</a></li>
+                            <li><a href="category-stationery.html">Kırtasiye & Okul</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown corporate-dropdown">
+                        <a href="#">Kurumsal <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">Hakkımızda</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-button-item">
+                        <div class="user-menu-dropdown dropdown">
+                            <a href="#" class="user-icon-btn">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <ul class="user-dropdown-menu dropdown-menu">
+                                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                                <li><a href="register.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-button-item">
+                        <div class="cart-icon" onclick="openCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Category Header -->
+            <div class="category-header">
+                <div class="category-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h1>Ev & Yaşam Ürünleri</h1>
+                <p>Eviniz için kaliteli ürünler, akıllı aletler ve yaşam kolaylaştırıcılar</p>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Nettenbegen</h3>
+                <p>Beğeneceğiniz sanal market. Kaliteli ürünler, uygun fiyatlar ve hızlı teslimat.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/nettenbegen" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/nettenbegen" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/nettenbegen" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/company/nettenbegen" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Kategoriler</h4>
+                <ul>
+                    <li><a href="category-electronics.html">Elektronik</a></li>
+                    <li><a href="category-home.html">Ev & Yaşam</a></li>
+                    <li><a href="category-books.html">Kitap & Hobi</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Destek</h4>
+                <ul>
+                    <li><a href="contact.html">İletişim</a></li>
+                    <li><a href="contact.html">Teknik Destek</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Şirket</h4>
+                <ul>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                    <li><a href="contact.html">Gizlilik</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 Nettenbegen. Tüm hakları saklıdır. | www.nettenbegen.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dinamik ürün yönetimi
+        function loadCategoryProducts() {
+            const products = JSON.parse(localStorage.getItem('nettenbegenProducts')) || [];
+            const categoryProducts = products.filter(product => 
+                product.category === 'Ev & Yaşam' && 
+                product.status === 'Aktif' &&
+                (product.page === 'category-home.html' || !product.page || product.page === '')
+            );
+            
+            renderCategoryProducts(categoryProducts);
+        }
+
+        function renderCategoryProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = createCategoryProductCard(product);
+                grid.appendChild(productCard);
+            });
+        }
+
+        function createCategoryProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.setAttribute('data-product-id', product.id);
+            card.style.cursor = 'pointer';
+            
+            card.onclick = function() {
+                window.location.href = `product-detail.html?id=${product.id}`;
+            };
+
+            const discount = Math.random() > 0.7 ? Math.floor(Math.random() * 30) + 10 : 0;
+            const originalPrice = discount > 0 ? Math.round(product.price * (1 + discount / 100)) : product.price;
+            const discountedPrice = discount > 0 ? product.price : originalPrice;
+
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/667eea/ffffff?text=${encodeURIComponent(product.name)}'">
+                    ${discount > 0 ? `<div class="product-badge">%${discount} İndirim</div>` : ''}
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <p>${product.description || 'Bu ürün hakkında detaylı bilgi için tıklayın.'}</p>
+                    <div class="product-features">
+                        <span class="feature-tag">Stok: ${product.stock}</span>
+                        ${product.code ? `<span class="feature-tag">${product.code}</span>` : ''}
+                    </div>
+                    <div class="product-price">
+                        <span class="price">₺${discountedPrice.toLocaleString()}</span>
+                        ${discount > 0 ? `<span class="original-price">₺${originalPrice.toLocaleString()}</span>` : ''}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary add-to-cart" data-product="${product.name}" data-price="${discountedPrice}" onclick="event.stopPropagation(); addToCartByData(this);">
+                            <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                        </button>
+                        <a href="product-detail.html?id=${product.id}" class="btn btn-secondary" onclick="event.stopPropagation();">Detaylar</a>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Ürün güncellemelerini dinle
+        function listenForProductUpdates() {
+            window.addEventListener('productsUpdated', function(event) {
+                loadCategoryProducts();
+                showNotification('Ev & Yaşam ürünleri güncellendi!', 'success');
+            });
+        }
+
+        // Sayfa yüklendiğinde ürünleri yükle
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategoryProducts();
+            listenForProductUpdates();
+        });
+
+        // Home & Lifestyle products data (fallback)
+        const homeProducts = [
+            {
+                id: 3,
+                name: "Akıllı Saat",
+                price: 899,
+                originalPrice: 1299,
+                image: "product4.jpg",
+                placeholder: "https://via.placeholder.com/300x200/ff6b35/ffffff?text=Akıllı+Saat",
+                description: "Fitness takibi ve sağlık monitörü özellikli akıllı saat. Su geçirmez ve uzun pil ömrü.",
+                features: ["Kalp Atış Hızı", "GPS Takip", "Su Geçirmez"],
+                badge: "Yeni"
+            },
+            {
+                id: 10,
+                name: "Akıllı Ev Asistanı",
+                price: 599,
+                originalPrice: 799,
+                image: "smart-home1.jpg",
+                placeholder: "https://via.placeholder.com/300x200/4caf50/ffffff?text=Akıllı+Ev",
+                description: "Sesli komutla çalışan akıllı ev asistanı. Müzik çalar, hava durumu ve daha fazlası.",
+                features: ["Sesli Komut", "Müzik Çalar", "Hava Durumu"],
+                badge: "%25 İndirim"
+            },
+            {
+                id: 11,
+                name: "Robot Süpürge",
+                price: 1299,
+                originalPrice: 1699,
+                image: "robot-vacuum1.jpg",
+                placeholder: "https://via.placeholder.com/300x200/9c27b0/ffffff?text=Robot+Süpürge",
+                description: "Otomatik robot süpürge. Akıllı haritalama ve uzaktan kontrol özelliği.",
+                features: ["Akıllı Haritalama", "Uzaktan Kontrol", "120 Dakika Pil"],
+                badge: "%20 İndirim"
+            },
+            {
+                id: 12,
+                name: "Akıllı Ampul Seti",
+                price: 199,
+                originalPrice: 299,
+                image: "smart-bulb1.jpg",
+                placeholder: "https://via.placeholder.com/300x200/ff9800/ffffff?text=Akıllı+Ampul",
+                description: "Renk değiştiren akıllı ampul seti. Telefon uygulaması ile kontrol.",
+                features: ["16 Milyon Renk", "Telefon Kontrolü", "Enerji Tasarruflu"],
+                badge: "%30 İndirim"
+            }
+        ];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts();
+        });
+
+        // Display products
+        function displayProducts() {
+            const grid = document.getElementById('productsGrid');
+
+            grid.innerHTML = homeProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/4caf50/ffffff?text=${encodeURIComponent(product.name)}'" loading="lazy" decoding="async">
+                        <div class="product-badge">${product.badge}</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-features">
+                            ${product.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                        </div>
+                        <div class="product-price">
+                            <span class="price">₺${product.price.toLocaleString()}</span>
+                            ${product.originalPrice ? `<span class="original-price">₺${product.originalPrice.toLocaleString()}</span>` : ''}
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary add-to-cart" data-product="${product.name}" data-price="${product.price}">
+                                <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                            </button>
+                            <a href="products.html" class="btn btn-secondary">Detaylar</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.getAttribute('data-product');
+                    const productPrice = parseInt(this.getAttribute('data-price'));
+                    addToCart(productName, productPrice);
+                });
+            });
+        }
+
+        // Cart functionality
+        let cart = [];
+
+        function addToCart(productName, price) {
+            const existingItem = cart.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: price,
+                    qty: 1
+                });
+            }
+            
+            saveCartToStorage();
+            updateCartCount();
+            showNotification(`${productName} sepete eklendi!`);
+        }
+
+        function removeFromCart(name) {
+            const idx = cart.findIndex(i => i.name === name);
+            if (idx > -1) {
+                cart.splice(idx, 1);
+                saveCartToStorage();
+                updateCartCount();
+                showNotification(`${name} sepetten çıkarıldı!`);
+            }
+        }
+
+        function changeQty(name, delta) {
+            const item = cart.find(i => i.name === name);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                removeFromCart(name);
+            } else {
+                saveCartToStorage();
+                updateCartCount();
+            }
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        function openCart() {
+            if (cart.length === 0) {
+                alert('Sepetiniz boş!');
+                return;
+            }
+            window.location.href = 'payment.html';
+        }
+
+        function showNotification(message) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('Nettenbegen', { body: message });
+            } else {
+                alert(message);
+            }
+        }
+
+        // Initialize cart count
+        updateCartCount();
+    </script>
+</body>
+</html> 

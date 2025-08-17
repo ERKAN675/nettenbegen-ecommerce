@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme Sayfası | Nettenbegen</title>
+    <meta name="description" content="Nettenbegen ödeme sayfası - Güvenli ve hızlı ödeme işlemleri">
+    <meta name="keywords" content="ödeme, kredi kartı, nettenbegen, e-ticaret">
+    <meta name="author" content="Nettenbegen">
+    <meta property="og:title" content="Ödeme Sayfası | Nettenbegen">
+    <meta property="og:description" content="Güvenli ve hızlı ödeme işlemleri">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.nettenbegen.com/payment">
+    <link rel="icon" type="image/png" href="nettenbegen.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f8f9fa; }
+        header { background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); color: white; padding: 1rem 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+        .logo { display: flex; align-items: center; text-decoration: none; color: #fff; font-size: 1.5rem; font-weight: bold; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.05); }
+        .logo img { height: 80px; width: auto; margin-right: 10px; border-radius: 5px; }
+        nav ul { display: flex; list-style: none; align-items: center; gap: 0.85cm; justify-content: flex-end; }
+        nav ul li { margin: 0; }
+        nav ul li a { color: white; text-decoration: none; transition: color 0.3s; }
+        nav ul li a:hover { color: #ff6b35; }
+        .dropdown { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 50%; background: white; min-width: 200px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-radius: 10px; padding: 1rem 0; opacity: 0; visibility: hidden; transform: translate(-50%, -10px); transition: all 0.3s ease; z-index: 1000; display: flex; flex-direction: column; }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+        .categories-dropdown { position: relative; }
+        .categories-dropdown > a { display: inline-block; }
+        .categories-dropdown .dropdown-menu { left: 50%; transform: translate(-50%, -10px); width: max-content; min-width: 160px; max-width: 240px; }
+        .categories-dropdown:hover .dropdown-menu { transform: translate(-50%, 0); }
+        .categories-dropdown .dropdown-menu li a { white-space: nowrap; }
+        .corporate-dropdown { position: relative; }
+        .corporate-dropdown > a { display: inline-block; }
+        .corporate-dropdown .dropdown-menu { left: 50%; transform: translate(-50%, -10px); width: max-content; min-width: 160px; max-width: 240px; }
+        .corporate-dropdown:hover .dropdown-menu { transform: translate(-50%, 0); }
+        .dropdown-menu li { margin: 0; padding: 0; }
+        .dropdown-menu li a { display: block; padding: 0.8rem 1.5rem; color: #333; text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid #f0f0f0; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+        .dropdown-menu li a:hover { background: #f8f9fa; color: #ff6b35; padding-left: 2rem; }
+        .dropdown > a i { margin-left: 0.5rem; transition: transform 0.3s ease; }
+        .dropdown:hover > a i { transform: rotate(180deg); }
+        .nav-button-item { display: flex; align-items: center; }
+        .user-menu-dropdown { position: relative; }
+        .user-icon-btn { display: flex; align-items: center; justify-content: center; background: transparent; border: none; border-radius: 0; color: white; text-decoration: none; font-size: 1.4rem; padding: 0 2px; transition: color 0.3s ease, transform 0.2s ease; }
+        .user-icon-btn i { display: block; line-height: 1; transform: translateY(0.5px); }
+        .user-dropdown-menu { left: 50%; transform: translate(-50%, -10px); min-width: 160px; top: calc(100% + 10px); }
+        .user-dropdown-menu li a { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1rem; color: #333; text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid #f0f0f0; }
+        .user-dropdown-menu li a:hover { background: #f8f9fa; color: #ff6b35; padding-left: 1.2rem; }
+        .user-dropdown-menu li a i { font-size: 1rem; width: 18px; }
+        .user-menu-dropdown, .cart-icon { position: relative; top: 2px; }
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-icon i { font-size: 1.5rem; color: white; }
+        .cart-count { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .main-content { margin-top: 120px; padding: 2rem 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .payment-header { text-align: center; margin-bottom: 3rem; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 3rem 2rem; border-radius: 15px; }
+        .payment-header h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .payment-header p { font-size: 1.2rem; opacity: 0.9; }
+        .payment-container { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .payment-form { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .order-summary { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); height: fit-content; }
+        
+        /* Credit Card Preview Styles */
+        .card-preview-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 420px;
+            height: 220px;
+            margin: 0 auto 2rem auto;
+        }
+        
+        .card-preview-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .card-preview {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .card-bank {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .card-chip {
+            width: 45px;
+            height: 35px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .card-chip::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.1) 2px,
+                rgba(0,0,0,0.1) 4px
+            );
+        }
+        
+        .card-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.2rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        
+        .card-holder {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .card-expiry {
+            font-size: 0.9rem;
+        }
+        
+        .card-cvv {
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .card-preview-container:hover .card-cvv {
+            display: block;
+        }
+        
+        /* 3D Flip Animation */
+        .card-preview-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .card-preview {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .card-preview.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-front {
+            backface-visibility: hidden;
+        }
+        
+        .card-magnetic-stripe {
+            height: 40px;
+            background: linear-gradient(45deg, #000, #333);
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .card-signature-panel {
+            background: #f0f0f0;
+            height: 30px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-signature-panel .card-cvv {
+            position: static;
+            background: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            color: #333;
+            transform: none;
+            display: block !important;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #4facfe; }
+        .form-group textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .btn { padding: 1rem 2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
+        .btn-primary { background: #4facfe; color: white; }
+        .btn-primary:hover { background: #3d9bfe; transform: translateY(-2px); }
+        .btn-secondary { background: #f8f9fa; color: #333; border: 2px solid #e7e7e7; }
+        .btn-secondary:hover { background: #e9ecef; transform: translateY(-2px); }
+        .order-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f0f0f0; }
+        .order-item:last-child { border-bottom: none; }
+        .order-item-name { font-weight: 600; }
+        .order-item-price { color: #666; }
+        .order-total { margin-top: 1rem; padding-top: 1rem; border-top: 2px solid #e9ecef; font-weight: bold; font-size: 1.2rem; }
+        .payment-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .payment-method { border: 2px solid #e9ecef; border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .payment-method:hover { border-color: #4facfe; background: #f8f9fa; }
+        .payment-method.selected { border-color: #4facfe; background: #e3f2fd; }
+        .payment-method i { font-size: 2rem; margin-bottom: 0.5rem; color: #4facfe; }
+        .security-badges { display: flex; gap: 1rem; margin-top: 2rem; }
+        .security-badge { display: flex; align-items: center; gap: 0.5rem; color: #28a745; font-size: 0.9rem; }
+        footer { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 3rem 0 0; margin-top: 4rem; }
+        .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .footer-section h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        .footer-section h4 { font-size: 1.2rem; margin-bottom: 1rem; color: #fff; }
+        .footer-section p { margin-bottom: 1rem; opacity: 0.9; line-height: 1.6; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: #ffffff; text-decoration: none; transition: color 0.3s; }
+        .footer-section ul li a:hover { color: #fff; }
+        .social-links { margin-top: 1rem; }
+        .social-links a { color: white; font-size: 2rem; margin: 0 10px; transition: color 0.3s; }
+        .social-links a:hover { color: #ff6b35; }
+        .footer-bottom { background: rgba(0,0,0,0.2); padding: 1rem 0; margin-top: 2rem; }
+        .footer-bottom p { text-align: center; margin: 0; }
+        @media (max-width: 768px) { .header-container { flex-direction: column; gap: 1rem; } nav ul { flex-direction: column; gap: 1rem; align-items: flex-start; } .payment-container { grid-template-columns: 1fr; } .payment-header h1 { font-size: 2rem; } .form-row { grid-template-columns: 1fr; } }
+        
+        /* Notification Animations */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="nettenbegen.png" alt="Nettenbegen Logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li class="dropdown categories-dropdown">
+                        <a href="#">Kategoriler <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="category-electronics.html">Elektronik</a></li>
+                            <li><a href="category-home.html">Ev & Yaşam</a></li>
+                            <li><a href="category-books.html">Kitap & Hobi</a></li>
+                            <li><a href="category-toys.html">Oyuncak</a></li>
+                            <li><a href="category-baby.html">Anne & Bebek</a></li>
+                            <li><a href="category-flowers.html">Çiçek</a></li>
+                            <li><a href="category-beads.html">Boncuk & Taş</a></li>
+                            <li><a href="category-invitations.html">Davetiyeler</a></li>
+                            <li><a href="category-decoration.html">Süsleme Malzemeleri</a></li>
+                            <li><a href="category-stationery.html">Kırtasiye & Okul</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown corporate-dropdown">
+                        <a href="#">Kurumsal <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">Hakkımızda</a></li>
+                            <li><a href="contact.html">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-button-item">
+                        <div class="user-menu-dropdown dropdown">
+                            <a href="#" class="user-icon-btn">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <ul class="user-dropdown-menu dropdown-menu">
+                                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a></li>
+                                <li><a href="register.html"><i class="fas fa-user-plus"></i> Kayıt Ol</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-button-item">
+                        <div class="cart-icon" onclick="openCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container">
+            <div class="payment-header">
+                <h1><i class="fas fa-credit-card"></i> Ödeme Sayfası</h1>
+                <p>Güvenli ve hızlı ödeme işlemleri</p>
+            </div>
+            <div class="payment-container">
+                <div class="payment-form">
+                    <h2>Ödeme Bilgileri</h2>
+                    
+                    <!-- Kredi Kartı Ön İzleme -->
+                    <div class="card-preview-container">
+                        <div class="card-preview" id="cardPreview">
+                                                         <!-- Kart Ön Yüzü -->
+                             <div class="card-front">
+                                 <div class="card-header">
+                                     <div>
+                                         <div class="card-logo" id="previewCardLogo">CREDIT CARD</div>
+                                         <div class="card-bank" id="previewCardBank"></div>
+                                     </div>
+                                     <div class="card-chip"></div>
+                                 </div>
+                                 <div class="card-number" id="previewCardNumber">**** **** **** ****</div>
+                                 <div class="card-details">
+                                     <div class="card-holder" id="previewCardHolder">KART SAHİBİ</div>
+                                     <div class="card-expiry" id="previewCardExpiry">AA/YY</div>
+                                 </div>
+                             </div>
+                            
+                                                         <!-- Kart Arka Yüzü -->
+                             <div class="card-back">
+                                 <div class="card-header">
+                                     <div class="card-logo">CREDIT CARD</div>
+                                 </div>
+                                 <div class="card-magnetic-stripe"></div>
+                                 <div class="card-signature-panel">
+                                     <div class="card-cvv" id="previewCardCvv">***</div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method selected" onclick="selectPaymentMethod(this, 'credit')">
+                            <i class="fas fa-credit-card"></i>
+                            <div>Kredi Kartı</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'debit')">
+                            <i class="fas fa-credit-card"></i>
+                            <div>Banka Kartı</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'transfer')">
+                            <i class="fas fa-university"></i>
+                            <div>Havale/EFT</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'cod')">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <div>Kapıda Ödeme</div>
+                        </div>
+                    </div>
+                    <form id="paymentForm">
+                        <div id="creditCardForm">
+                            <div class="form-group">
+                                <label for="cardName">Kart Üzerindeki İsim</label>
+                                <input type="text" id="cardName" name="cardName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Kart Numarası</label>
+                                <input type="text" id="cardNumber" name="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryDate">Son Kullanma Tarihi</label>
+                                    <input type="text" id="expiryDate" name="expiryDate" placeholder="AA/YY" maxlength="5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" maxlength="3" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullName">Ad Soyad</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon Numarası</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+90" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shippingMethod">Kargo Seçeneği</label>
+                            <select id="shippingMethod" name="shippingMethod" required>
+                                <option value="">Kargo seçeneği seçin</option>
+                                <option value="standard">Standart Kargo (3-5 iş günü) - ₺15</option>
+                                <option value="express">Hızlı Kargo (1-2 iş günü) - ₺25</option>
+                                <option value="same-day">Aynı Gün Kargo - ₺35</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="billingAddress">Fatura Adresi</label>
+                            <textarea id="billingAddress" name="billingAddress" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="shippingAddress">Teslimat Adresi</label>
+                            <textarea id="shippingAddress" name="shippingAddress" rows="3" required></textarea>
+                        </div>
+                        <div class="security-badges">
+                            <div class="security-badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>SSL Güvenlik</span>
+                            </div>
+                            <div class="security-badge">
+                                <i class="fas fa-lock"></i>
+                                <span>256-bit Şifreleme</span>
+                            </div>
+                            <div class="security-badge">
+                                <i class="fas fa-check-circle"></i>
+                                <span>PCI Uyumlu</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-lock"></i>
+                            Ödemeyi Tamamla
+                        </button>
+                    </form>
+                </div>
+                <div class="order-summary">
+                    <h3>Sipariş Özeti</h3>
+                    <div id="orderItems">
+                        <!-- Sipariş öğeleri buraya gelecek -->
+                    </div>
+                    <div class="order-total">
+                        <div>Toplam: <span id="orderTotal">₺0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Nettenbegen</h3>
+                <p>Beğeneceğiniz sanal market. Kaliteli ürünler, uygun fiyatlar ve hızlı teslimat.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/nettenbegen" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/netten.begen" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/nettenbegen" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Kategoriler</h4>
+                <ul>
+                    <li><a href="category-electronics.html">Elektronik</a></li>
+                    <li><a href="category-home.html">Ev & Yaşam</a></li>
+                    <li><a href="category-books.html">Kitap & Hobi</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Destek</h4>
+                <ul>
+                    <li><a href="contact.html">İletişim</a></li>
+                    <li><a href="contact.html">Teknik Destek</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Şirket</h4>
+                <ul>
+                    <li><a href="about.html">Hakkımızda</a></li>
+                    <li><a href="contact.html">Gizlilik</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 Nettenbegen. Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        let cart = [];
+        let favorites = [];
+        let selectedPaymentMethod = 'credit';
+        
+        // Sayfa yüklendiğinde sepeti ve favorileri localStorage'dan al
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartFromStorage();
+            loadFavoritesFromStorage();
+            displayOrderSummary();
+            setupFormValidation();
+            
+            // Ad soyad ve telefon alanlarını her zaman zorunlu yap
+            const requiredFields = ['fullName', 'phone'];
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.setAttribute('required', 'required');
+                }
+            });
+        });
+        
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('nettenbegenCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+                displayOrderSummary(); // Bu satırı ekledim
+            }
+        }
+        
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+        
+        function removeFromCart(name) {
+            const idx = cart.findIndex(i => i.name === name);
+            if (idx > -1) {
+                cart.splice(idx, 1);
+                saveCartToStorage();
+                updateCartCount();
+                displayOrderSummary();
+                showNotification(`${name} sepetten çıkarıldı`);
+            }
+        }
+        
+        function saveCartToStorage() {
+            localStorage.setItem('nettenbegenCart', JSON.stringify(cart));
+        }
+        
+        function showNotification(message, type = 'success') {
+            // Basit bildirim sistemi
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 2000);
+        }
+        
+        function displayOrderSummary() {
+            const orderItems = document.getElementById('orderItems');
+            const orderTotal = document.getElementById('orderTotal');
+            
+            if (cart.length === 0) {
+                orderItems.innerHTML = '<p>Sipariş bulunamadı.</p>';
+                orderTotal.textContent = '₺0';
+                return;
+            }
+            
+            let total = 0;
+            const itemsHtml = cart.map(item => {
+                const itemTotal = (item.price || 0) * (item.qty || 1);
+                total += itemTotal;
+                return `
+                    <div class="order-item">
+                        <div>
+                            <div class="order-item-name">${item.name}</div>
+                            <div class="order-item-price">₺${(item.price || 0).toLocaleString()} x ${item.qty || 1}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div class="order-item-price">₺${itemTotal.toLocaleString()}</div>
+                            <button class="btn btn-secondary" onclick="removeFromCart('${item.name}')" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            orderItems.innerHTML = itemsHtml;
+            
+            // Kargo ücretini hesapla
+            const shippingMethod = document.getElementById('shippingMethod');
+            let shippingCost = 0;
+            if (shippingMethod && shippingMethod.value) {
+                switch(shippingMethod.value) {
+                    case 'standard':
+                        shippingCost = 15;
+                        break;
+                    case 'express':
+                        shippingCost = 25;
+                        break;
+                    case 'same-day':
+                        shippingCost = 35;
+                        break;
+                }
+            }
+            
+            const finalTotal = total + shippingCost;
+            orderTotal.textContent = `₺${finalTotal.toLocaleString()}`;
+            
+            // Kargo ücretini göster
+            if (shippingCost > 0) {
+                const shippingInfo = document.createElement('div');
+                shippingInfo.style.cssText = 'margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #f0f0f0; font-size: 0.9rem; color: #666;';
+                shippingInfo.innerHTML = `
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Kargo Ücreti:</span>
+                        <span>₺${shippingCost}</span>
+                    </div>
+                `;
+                
+                // Eğer zaten kargo bilgisi varsa kaldır
+                const existingShipping = orderTotal.parentNode.querySelector('.shipping-info');
+                if (existingShipping) {
+                    existingShipping.remove();
+                }
+                
+                shippingInfo.className = 'shipping-info';
+                orderTotal.parentNode.appendChild(shippingInfo);
+            }
+        }
+        
+        function selectPaymentMethod(element, method) {
+            // Tüm ödeme yöntemlerinden seçili sınıfını kaldır
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Seçilen ödeme yöntemine seçili sınıfını ekle
+            element.classList.add('selected');
+            selectedPaymentMethod = method;
+            
+            // Kredi kartı formunu göster/gizle
+            const creditCardForm = document.getElementById('creditCardForm');
+            const cardFields = ['cardName', 'cardNumber', 'expiryDate', 'cvv'];
+            
+            // Ad soyad ve telefon alanları her zaman zorunlu
+            const requiredFields = ['fullName', 'phone'];
+            
+            if (method === 'cod' || method === 'transfer') {
+                // Kapıda ödeme veya Havale/EFT seçildiğinde kart formunu gizle ve required'ı kaldır
+                creditCardForm.style.display = 'none';
+                cardFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.removeAttribute('required');
+                    }
+                });
+                
+                // Ad soyad ve telefon alanlarını zorunlu yap
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.setAttribute('required', 'required');
+                    }
+                });
+            } else {
+                // Kredi kartı ve banka kartı seçildiğinde kart formunu göster ve required ekle
+                creditCardForm.style.display = 'block';
+                cardFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.setAttribute('required', 'required');
+                    }
+                });
+                
+                // Ad soyad ve telefon alanlarını zorunlu yap
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.setAttribute('required', 'required');
+                    }
+                });
+            }
+            
+            // Kart ön izlemesini güncelle
+            updateCardPreviewForPaymentMethod(method);
+        }
+        
+        // Ödeme yöntemine göre kart ön izlemesini güncelle
+        function updateCardPreviewForPaymentMethod(method) {
+            const previewLogo = document.getElementById('previewCardLogo');
+            const previewBank = document.getElementById('previewCardBank');
+            
+            if (method === 'debit') {
+                // Banka Kartı seçildiğinde
+                const cardNumber = document.getElementById('cardNumber').value;
+                if (cardNumber && cardNumber.replace(/\s/g, '').length >= 4) {
+                    const bankName = detectBank(cardNumber);
+                    previewLogo.textContent = bankName;
+                    previewBank.textContent = '';
+                } else {
+                    previewLogo.textContent = 'BANKA KARTI';
+                    previewBank.textContent = '';
+                }
+            } else if (method === 'credit') {
+                // Kredi Kartı seçildiğinde
+                const cardNumber = document.getElementById('cardNumber').value;
+                if (cardNumber && cardNumber.replace(/\s/g, '').length >= 4) {
+                    const bankName = detectBank(cardNumber);
+                    previewLogo.textContent = bankName;
+                    previewBank.textContent = '';
+                } else {
+                    previewLogo.textContent = 'CREDIT CARD';
+                    previewBank.textContent = '';
+                }
+            }
+        }
+        
+        // Banka tespiti fonksiyonu
+        function detectBank(cardNumber) {
+            const cleanNumber = cardNumber.replace(/\s/g, '');
+            const firstFour = cleanNumber.substring(0, 4);
+            const firstSix = cleanNumber.substring(0, 6);
+            
+            console.log('Banka tespiti - İlk 4:', firstFour, 'İlk 6:', firstSix); // Debug
+            
+            // Türk bankaları için BIN numaraları
+            const bankBins = {
+                '4022': 'VakıfBank',
+                '4023': 'VakıfBank',
+                '4024': 'VakıfBank',
+                '4025': 'VakıfBank',
+                '4026': 'VakıfBank',
+                '4027': 'VakıfBank',
+                '4028': 'VakıfBank',
+                '4029': 'VakıfBank',
+                '4030': 'VakıfBank',
+                '4031': 'VakıfBank',
+                '4032': 'VakıfBank',
+                '4033': 'VakıfBank',
+                '4034': 'VakıfBank',
+                '4035': 'VakıfBank',
+                '4036': 'VakıfBank',
+                '4037': 'VakıfBank',
+                '4038': 'VakıfBank',
+                '4039': 'VakıfBank',
+                '4040': 'VakıfBank',
+                '4041': 'VakıfBank',
+                '4042': 'VakıfBank',
+                '4043': 'VakıfBank',
+                '4044': 'VakıfBank',
+                '4045': 'VakıfBank',
+                '4046': 'VakıfBank',
+                '4047': 'VakıfBank',
+                '4048': 'VakıfBank',
+                '4049': 'VakıfBank',
+                '4050': 'VakıfBank',
+                '4051': 'VakıfBank',
+                '4052': 'VakıfBank',
+                '4053': 'VakıfBank',
+                '4054': 'VakıfBank',
+                '4055': 'VakıfBank',
+                '4056': 'VakıfBank',
+                '4057': 'VakıfBank',
+                '4058': 'VakıfBank',
+                '4059': 'VakıfBank',
+                '4060': 'VakıfBank',
+                '4061': 'VakıfBank',
+                '4062': 'VakıfBank',
+                '4063': 'VakıfBank',
+                '4064': 'VakıfBank',
+                '4065': 'VakıfBank',
+                '4066': 'VakıfBank',
+                '4067': 'VakıfBank',
+                '4068': 'VakıfBank',
+                '4069': 'VakıfBank',
+                '4070': 'VakıfBank',
+                '4071': 'VakıfBank',
+                '4072': 'VakıfBank',
+                '4073': 'VakıfBank',
+                '4074': 'VakıfBank',
+                '4075': 'VakıfBank',
+                '4076': 'VakıfBank',
+                '4077': 'VakıfBank',
+                '4078': 'VakıfBank',
+                '4079': 'VakıfBank',
+                '4080': 'VakıfBank',
+                '4081': 'VakıfBank',
+                '4082': 'VakıfBank',
+                '4083': 'VakıfBank',
+                '4084': 'VakıfBank',
+                '4085': 'VakıfBank',
+                '4086': 'VakıfBank',
+                '4087': 'VakıfBank',
+                '4088': 'VakıfBank',
+                '4089': 'VakıfBank',
+                '4090': 'VakıfBank',
+                '4091': 'VakıfBank',
+                '4092': 'VakıfBank',
+                '4093': 'VakıfBank',
+                '4094': 'VakıfBank',
+                '4095': 'VakıfBank',
+                '4096': 'VakıfBank',
+                '4097': 'VakıfBank',
+                '4098': 'VakıfBank',
+                '4099': 'VakıfBank',
+                '4508': 'İş Bankası',
+                '4509': 'İş Bankası',
+                '4510': 'İş Bankası',
+                '4511': 'İş Bankası',
+                '4512': 'İş Bankası',
+                '4513': 'İş Bankası',
+                '4514': 'İş Bankası',
+                '4515': 'İş Bankası',
+                '4516': 'İş Bankası',
+                '4517': 'İş Bankası',
+                '4518': 'İş Bankası',
+                '4519': 'İş Bankası',
+                '4520': 'İş Bankası',
+                '4521': 'İş Bankası',
+                '4522': 'İş Bankası',
+                '4523': 'İş Bankası',
+                '4524': 'İş Bankası',
+                '4525': 'İş Bankası',
+                '4526': 'İş Bankası',
+                '4527': 'İş Bankası',
+                '4528': 'İş Bankası',
+                '4529': 'İş Bankası',
+                '4530': 'İş Bankası',
+                '4531': 'İş Bankası',
+                '4532': 'İş Bankası',
+                '4533': 'İş Bankası',
+                '4534': 'İş Bankası',
+                '4535': 'İş Bankası',
+                '4536': 'İş Bankası',
+                '4537': 'İş Bankası',
+                '4538': 'İş Bankası',
+                '4539': 'İş Bankası',
+                '4540': 'İş Bankası',
+                '4541': 'İş Bankası',
+                '4542': 'İş Bankası',
+                '4543': 'İş Bankası',
+                '4544': 'İş Bankası',
+                '4545': 'İş Bankası',
+                '4546': 'İş Bankası',
+                '4547': 'İş Bankası',
+                '4548': 'İş Bankası',
+                '4549': 'İş Bankası',
+                '4550': 'İş Bankası',
+                '4551': 'İş Bankası',
+                '4552': 'İş Bankası',
+                '4553': 'İş Bankası',
+                '4554': 'İş Bankası',
+                '4555': 'İş Bankası',
+                '4556': 'İş Bankası',
+                '4557': 'İş Bankası',
+                '4558': 'İş Bankası',
+                '4559': 'İş Bankası',
+                '4560': 'İş Bankası',
+                '4561': 'İş Bankası',
+                '4562': 'İş Bankası',
+                '4563': 'İş Bankası',
+                '4564': 'İş Bankası',
+                '4565': 'İş Bankası',
+                '4566': 'İş Bankası',
+                '4567': 'İş Bankası',
+                '4568': 'İş Bankası',
+                '4569': 'İş Bankası',
+                '4570': 'İş Bankası',
+                '4571': 'İş Bankası',
+                '4572': 'İş Bankası',
+                '4573': 'İş Bankası',
+                '4574': 'İş Bankası',
+                '4575': 'İş Bankası',
+                '4576': 'İş Bankası',
+                '4577': 'İş Bankası',
+                '4578': 'İş Bankası',
+                '4579': 'İş Bankası',
+                '4580': 'İş Bankası',
+                '4581': 'İş Bankası',
+                '4582': 'İş Bankası',
+                '4583': 'İş Bankası',
+                '4584': 'İş Bankası',
+                '4585': 'İş Bankası',
+                '4586': 'İş Bankası',
+                '4587': 'İş Bankası',
+                '4588': 'İş Bankası',
+                '4589': 'İş Bankası',
+                '4590': 'İş Bankası',
+                '4591': 'İş Bankası',
+                '4592': 'İş Bankası',
+                '4593': 'İş Bankası',
+                '4594': 'İş Bankası',
+                '4595': 'İş Bankası',
+                '4596': 'İş Bankası',
+                '4597': 'İş Bankası',
+                '4598': 'İş Bankası',
+                '4599': 'İş Bankası',
+                '5353': 'Yapı Kredi',
+                '5354': 'Yapı Kredi',
+                '5355': 'Yapı Kredi',
+                '5356': 'Yapı Kredi',
+                '5357': 'Yapı Kredi',
+                '5358': 'Yapı Kredi',
+                '5359': 'Yapı Kredi',
+                '5360': 'Yapı Kredi',
+                '5361': 'Yapı Kredi',
+                '5362': 'Yapı Kredi',
+                '5363': 'Yapı Kredi',
+                '5364': 'Yapı Kredi',
+                '5365': 'Yapı Kredi',
+                '5366': 'Yapı Kredi',
+                '5367': 'Yapı Kredi',
+                '5368': 'Yapı Kredi',
+                '5369': 'Yapı Kredi',
+                '5370': 'Yapı Kredi',
+                '5371': 'Yapı Kredi',
+                '5372': 'Yapı Kredi',
+                '5373': 'Yapı Kredi',
+                '5374': 'Yapı Kredi',
+                '5375': 'Yapı Kredi',
+                '5376': 'Yapı Kredi',
+                '5377': 'Yapı Kredi',
+                '5378': 'Yapı Kredi',
+                '5379': 'Yapı Kredi',
+                '5380': 'Yapı Kredi',
+                '5381': 'Yapı Kredi',
+                '5382': 'Yapı Kredi',
+                '5383': 'Yapı Kredi',
+                '5384': 'Yapı Kredi',
+                '5385': 'Yapı Kredi',
+                '5386': 'Yapı Kredi',
+                '5387': 'Yapı Kredi',
+                '5388': 'Yapı Kredi',
+                '5389': 'Yapı Kredi',
+                '5390': 'Yapı Kredi',
+                '5391': 'Yapı Kredi',
+                '5392': 'Yapı Kredi',
+                '5393': 'Yapı Kredi',
+                '5394': 'Yapı Kredi',
+                '5395': 'Yapı Kredi',
+                '5396': 'Yapı Kredi',
+                '5397': 'Yapı Kredi',
+                '5398': 'Yapı Kredi',
+                '5399': 'Yapı Kredi',
+                '5400': 'Yapı Kredi',
+                '5401': 'Yapı Kredi',
+                '5402': 'Yapı Kredi',
+                '5403': 'Yapı Kredi',
+                '5404': 'Yapı Kredi',
+                '5405': 'Yapı Kredi',
+                '5406': 'Yapı Kredi',
+                '5407': 'Yapı Kredi',
+                '5408': 'Yapı Kredi',
+                '5409': 'Yapı Kredi',
+                '5410': 'Yapı Kredi',
+                '5411': 'Yapı Kredi',
+                '5412': 'Yapı Kredi',
+                '5413': 'Yapı Kredi',
+                '5414': 'Yapı Kredi',
+                '5415': 'Yapı Kredi',
+                '5416': 'Yapı Kredi',
+                '5417': 'Yapı Kredi',
+                '5418': 'Yapı Kredi',
+                '5419': 'Yapı Kredi',
+                '5420': 'Yapı Kredi',
+                '5421': 'Yapı Kredi',
+                '5422': 'Yapı Kredi',
+                '5423': 'Yapı Kredi',
+                '5424': 'Yapı Kredi',
+                '5425': 'Yapı Kredi',
+                '5426': 'Yapı Kredi',
+                '5427': 'Yapı Kredi',
+                '5428': 'Yapı Kredi',
+                '5429': 'Yapı Kredi',
+                '5430': 'Yapı Kredi',
+                '5431': 'Yapı Kredi',
+                '5432': 'Yapı Kredi',
+                '5433': 'Yapı Kredi',
+                '5434': 'Yapı Kredi',
+                '5435': 'Yapı Kredi',
+                '5436': 'Yapı Kredi',
+                '5437': 'Yapı Kredi',
+                '5438': 'Yapı Kredi',
+                '5439': 'Yapı Kredi',
+                '5440': 'Yapı Kredi',
+                '5441': 'Yapı Kredi',
+                '5442': 'Yapı Kredi',
+                '5443': 'Yapı Kredi',
+                '5444': 'Yapı Kredi',
+                '5445': 'Yapı Kredi',
+                '5446': 'Yapı Kredi',
+                '5447': 'Yapı Kredi',
+                '5448': 'Yapı Kredi',
+                '5449': 'Yapı Kredi',
+                '5450': 'Yapı Kredi',
+                '5451': 'Yapı Kredi',
+                '5452': 'Yapı Kredi',
+                '5453': 'Yapı Kredi',
+                '5454': 'Yapı Kredi',
+                '5455': 'Yapı Kredi',
+                '5456': 'Yapı Kredi',
+                '5457': 'Yapı Kredi',
+                '5458': 'Yapı Kredi',
+                '5459': 'Yapı Kredi',
+                '5460': 'Yapı Kredi',
+                '5461': 'Yapı Kredi',
+                '5462': 'Yapı Kredi',
+                '5463': 'Yapı Kredi',
+                '5464': 'Yapı Kredi',
+                '5465': 'Yapı Kredi',
+                '5466': 'Yapı Kredi',
+                '5467': 'Yapı Kredi',
+                '5468': 'Yapı Kredi',
+                '5469': 'Yapı Kredi',
+                '5470': 'Yapı Kredi',
+                '5471': 'Yapı Kredi',
+                '5472': 'Yapı Kredi',
+                '5473': 'Yapı Kredi',
+                '5474': 'Yapı Kredi',
+                '5475': 'Yapı Kredi',
+                '5476': 'Yapı Kredi',
+                '5477': 'Yapı Kredi',
+                '5478': 'Yapı Kredi',
+                '5479': 'Yapı Kredi',
+                '5480': 'Yapı Kredi',
+                '5481': 'Yapı Kredi',
+                '5482': 'Yapı Kredi',
+                '5483': 'Yapı Kredi',
+                '5484': 'Yapı Kredi',
+                '5485': 'Yapı Kredi',
+                '5486': 'Yapı Kredi',
+                '5487': 'Yapı Kredi',
+                '5488': 'Yapı Kredi',
+                '5489': 'Yapı Kredi',
+                '5490': 'Yapı Kredi',
+                '5491': 'Yapı Kredi',
+                '5492': 'Yapı Kredi',
+                '5493': 'Yapı Kredi',
+                '5494': 'Yapı Kredi',
+                '5495': 'Yapı Kredi',
+                '5496': 'Yapı Kredi',
+                '5497': 'Yapı Kredi',
+                '5498': 'Yapı Kredi',
+                '5499': 'Yapı Kredi',
+                '5500': 'Yapı Kredi',
+                '5501': 'Yapı Kredi',
+                '5502': 'Yapı Kredi',
+                '5503': 'Yapı Kredi',
+                '5504': 'Yapı Kredi',
+                '5505': 'Yapı Kredi',
+                '5506': 'Yapı Kredi',
+                '5507': 'Yapı Kredi',
+                '5508': 'Yapı Kredi',
+                '5509': 'Yapı Kredi',
+                '5510': 'Yapı Kredi',
+                '5511': 'Yapı Kredi',
+                '5512': 'Yapı Kredi',
+                '5513': 'Yapı Kredi',
+                '5514': 'Yapı Kredi',
+                '5515': 'Yapı Kredi',
+                '5516': 'Yapı Kredi',
+                '5517': 'Yapı Kredi',
+                '5518': 'Yapı Kredi',
+                '5519': 'Yapı Kredi',
+                '5520': 'Yapı Kredi',
+                '5521': 'Yapı Kredi',
+                '5522': 'Yapı Kredi',
+                '5523': 'Yapı Kredi',
+                '5524': 'Yapı Kredi',
+                '5525': 'Yapı Kredi',
+                '5526': 'Yapı Kredi',
+                '5527': 'Yapı Kredi',
+                '5528': 'Yapı Kredi',
+                '5529': 'Yapı Kredi',
+                '5530': 'Yapı Kredi',
+                '5531': 'Yapı Kredi',
+                '5532': 'Yapı Kredi',
+                '5533': 'Yapı Kredi',
+                '5534': 'Yapı Kredi',
+                '5535': 'Yapı Kredi',
+                '5536': 'Yapı Kredi',
+                '5537': 'Yapı Kredi',
+                '5538': 'Yapı Kredi',
+                '5539': 'Yapı Kredi',
+                '5540': 'Yapı Kredi',
+                '5541': 'Yapı Kredi',
+                '5542': 'Yapı Kredi',
+                '5543': 'Yapı Kredi',
+                '5544': 'Yapı Kredi',
+                '5545': 'Yapı Kredi',
+                '5546': 'Yapı Kredi',
+                '5547': 'Yapı Kredi',
+                '5548': 'Yapı Kredi',
+                '5549': 'Yapı Kredi',
+                '5550': 'Yapı Kredi',
+                '5551': 'Yapı Kredi',
+                '5552': 'Yapı Kredi',
+                '5553': 'Yapı Kredi',
+                '5554': 'Yapı Kredi',
+                '5555': 'Yapı Kredi',
+                '5556': 'Yapı Kredi',
+                '5557': 'Yapı Kredi',
+                '5558': 'Yapı Kredi',
+                '5559': 'Yapı Kredi',
+                '5560': 'Yapı Kredi',
+                '5561': 'Yapı Kredi',
+                '5562': 'Yapı Kredi',
+                '5563': 'Yapı Kredi',
+                '5564': 'Yapı Kredi',
+                '5565': 'Yapı Kredi',
+                '5566': 'Yapı Kredi',
+                '5567': 'Yapı Kredi',
+                '5568': 'Yapı Kredi',
+                '5569': 'Yapı Kredi',
+                '5570': 'Yapı Kredi',
+                '5571': 'Yapı Kredi',
+                '5572': 'Yapı Kredi',
+                '5573': 'Yapı Kredi',
+                '5574': 'Yapı Kredi',
+                '5575': 'Yapı Kredi',
+                '5576': 'Yapı Kredi',
+                '5577': 'Yapı Kredi',
+                '5578': 'Yapı Kredi',
+                '5579': 'Yapı Kredi',
+                '5580': 'Yapı Kredi',
+                '5581': 'Yapı Kredi',
+                '5582': 'Yapı Kredi',
+                '5583': 'Yapı Kredi',
+                '5584': 'Yapı Kredi',
+                '5585': 'Yapı Kredi',
+                '5586': 'Yapı Kredi',
+                '5587': 'Yapı Kredi',
+                '5588': 'Yapı Kredi',
+                '5589': 'Yapı Kredi',
+                '5590': 'Yapı Kredi',
+                '5591': 'Yapı Kredi',
+                '5592': 'Yapı Kredi',
+                '5593': 'Yapı Kredi',
+                '5594': 'Yapı Kredi',
+                '5595': 'Yapı Kredi',
+                '5596': 'Yapı Kredi',
+                '5597': 'Yapı Kredi',
+                '5598': 'Yapı Kredi',
+                '5599': 'Yapı Kredi',
+                '6706': 'Garanti BBVA',
+                '6707': 'Garanti BBVA',
+                '6708': 'Garanti BBVA',
+                '6709': 'Garanti BBVA',
+                '6770': 'Garanti BBVA',
+                '6771': 'Garanti BBVA',
+                '6772': 'Garanti BBVA',
+                '6773': 'Garanti BBVA',
+                '6774': 'Garanti BBVA',
+                '6775': 'Garanti BBVA',
+                '6776': 'Garanti BBVA',
+                '6777': 'Garanti BBVA',
+                '6778': 'Garanti BBVA',
+                '6779': 'Garanti BBVA',
+                '6780': 'Garanti BBVA',
+                '6781': 'Garanti BBVA',
+                '6782': 'Garanti BBVA',
+                '6783': 'Garanti BBVA',
+                '6784': 'Garanti BBVA',
+                '6785': 'Garanti BBVA',
+                '6786': 'Garanti BBVA',
+                '6787': 'Garanti BBVA',
+                '6788': 'Garanti BBVA',
+                '6789': 'Garanti BBVA',
+                '6790': 'Garanti BBVA',
+                '6791': 'Garanti BBVA',
+                '6792': 'Garanti BBVA',
+                '6793': 'Garanti BBVA',
+                '6794': 'Garanti BBVA',
+                '6795': 'Garanti BBVA',
+                '6796': 'Garanti BBVA',
+                '6797': 'Garanti BBVA',
+                '6798': 'Garanti BBVA',
+                '6799': 'Garanti BBVA',
+                '6800': 'Garanti BBVA',
+                '6801': 'Garanti BBVA',
+                '6802': 'Garanti BBVA',
+                '6803': 'Garanti BBVA',
+                '6804': 'Garanti BBVA',
+                '6805': 'Garanti BBVA',
+                '6806': 'Garanti BBVA',
+                '6807': 'Garanti BBVA',
+                '6808': 'Garanti BBVA',
+                '6809': 'Garanti BBVA',
+                '6810': 'Garanti BBVA',
+                '6811': 'Garanti BBVA',
+                '6812': 'Garanti BBVA',
+                '6813': 'Garanti BBVA',
+                '6814': 'Garanti BBVA',
+                '6815': 'Garanti BBVA',
+                '6816': 'Garanti BBVA',
+                '6817': 'Garanti BBVA',
+                '6818': 'Garanti BBVA',
+                '6819': 'Garanti BBVA',
+                '6820': 'Garanti BBVA',
+                '6821': 'Garanti BBVA',
+                '6822': 'Garanti BBVA',
+                '6823': 'Garanti BBVA',
+                '6824': 'Garanti BBVA',
+                '6825': 'Garanti BBVA',
+                '6826': 'Garanti BBVA',
+                '6827': 'Garanti BBVA',
+                '6828': 'Garanti BBVA',
+                '6829': 'Garanti BBVA',
+                '6830': 'Garanti BBVA',
+                '6831': 'Garanti BBVA',
+                '6832': 'Garanti BBVA',
+                '6833': 'Garanti BBVA',
+                '6834': 'Garanti BBVA',
+                '6835': 'Garanti BBVA',
+                '6836': 'Garanti BBVA',
+                '6837': 'Garanti BBVA',
+                '6838': 'Garanti BBVA',
+                '6839': 'Garanti BBVA',
+                '6840': 'Garanti BBVA',
+                '6841': 'Garanti BBVA',
+                '6842': 'Garanti BBVA',
+                '6843': 'Garanti BBVA',
+                '6844': 'Garanti BBVA',
+                '6845': 'Garanti BBVA',
+                '6846': 'Garanti BBVA',
+                '6847': 'Garanti BBVA',
+                '6848': 'Garanti BBVA',
+                '6849': 'Garanti BBVA',
+                '6850': 'Garanti BBVA',
+                '6851': 'Garanti BBVA',
+                '6852': 'Garanti BBVA',
+                '6853': 'Garanti BBVA',
+                '6854': 'Garanti BBVA',
+                '6855': 'Garanti BBVA',
+                '6856': 'Garanti BBVA',
+                '6857': 'Garanti BBVA',
+                '6858': 'Garanti BBVA',
+                '6859': 'Garanti BBVA',
+                '6860': 'Garanti BBVA',
+                '6861': 'Garanti BBVA',
+                '6862': 'Garanti BBVA',
+                '6863': 'Garanti BBVA',
+                '6864': 'Garanti BBVA',
+                '6865': 'Garanti BBVA',
+                '6866': 'Garanti BBVA',
+                '6867': 'Garanti BBVA',
+                '6868': 'Garanti BBVA',
+                '6869': 'Garanti BBVA',
+                '6870': 'Garanti BBVA',
+                '6871': 'Garanti BBVA',
+                '6872': 'Garanti BBVA',
+                '6873': 'Garanti BBVA',
+                '6874': 'Garanti BBVA',
+                '6875': 'Garanti BBVA',
+                '6876': 'Garanti BBVA',
+                '6877': 'Garanti BBVA',
+                '6878': 'Garanti BBVA',
+                '6879': 'Garanti BBVA',
+                '6880': 'Garanti BBVA',
+                '6881': 'Garanti BBVA',
+                '6882': 'Garanti BBVA',
+                '6883': 'Garanti BBVA',
+                '6884': 'Garanti BBVA',
+                '6885': 'Garanti BBVA',
+                '6886': 'Garanti BBVA',
+                '6887': 'Garanti BBVA',
+                '6888': 'Garanti BBVA',
+                '6889': 'Garanti BBVA',
+                '6890': 'Garanti BBVA',
+                '6891': 'Garanti BBVA',
+                '6892': 'Garanti BBVA',
+                '6893': 'Garanti BBVA',
+                '6894': 'Garanti BBVA',
+                '6895': 'Garanti BBVA',
+                '6896': 'Garanti BBVA',
+                '6897': 'Garanti BBVA',
+                '6898': 'Garanti BBVA',
+                '6899': 'Garanti BBVA',
+                '6900': 'Garanti BBVA',
+                '6901': 'Garanti BBVA',
+                '6902': 'Garanti BBVA',
+                '6903': 'Garanti BBVA',
+                '6904': 'Garanti BBVA',
+                '6905': 'Garanti BBVA',
+                '6906': 'Garanti BBVA',
+                '6907': 'Garanti BBVA',
+                '6908': 'Garanti BBVA',
+                '6909': 'Garanti BBVA',
+                '6910': 'Garanti BBVA',
+                '6911': 'Garanti BBVA',
+                '6912': 'Garanti BBVA',
+                '6913': 'Garanti BBVA',
+                '6914': 'Garanti BBVA',
+                '6915': 'Garanti BBVA',
+                '6916': 'Garanti BBVA',
+                '6917': 'Garanti BBVA',
+                '6918': 'Garanti BBVA',
+                '6919': 'Garanti BBVA',
+                '6920': 'Garanti BBVA',
+                '6921': 'Garanti BBVA',
+                '6922': 'Garanti BBVA',
+                '6923': 'Garanti BBVA',
+                '6924': 'Garanti BBVA',
+                '6925': 'Garanti BBVA',
+                '6926': 'Garanti BBVA',
+                '6927': 'Garanti BBVA',
+                '6928': 'Garanti BBVA',
+                '6929': 'Garanti BBVA',
+                '6930': 'Garanti BBVA',
+                '6931': 'Garanti BBVA',
+                '6932': 'Garanti BBVA',
+                '6933': 'Garanti BBVA',
+                '6934': 'Garanti BBVA',
+                '6935': 'Garanti BBVA',
+                '6936': 'Garanti BBVA',
+                '6937': 'Garanti BBVA',
+                '6938': 'Garanti BBVA',
+                '6939': 'Garanti BBVA',
+                '6940': 'Garanti BBVA',
+                '6941': 'Garanti BBVA',
+                '6942': 'Garanti BBVA',
+                '6943': 'Garanti BBVA',
+                '6944': 'Garanti BBVA',
+                '6945': 'Garanti BBVA',
+                '6946': 'Garanti BBVA',
+                '6947': 'Garanti BBVA',
+                '6948': 'Garanti BBVA',
+                '6949': 'Garanti BBVA',
+                '6950': 'Garanti BBVA',
+                '6951': 'Garanti BBVA',
+                '6952': 'Garanti BBVA',
+                '6953': 'Garanti BBVA',
+                '6954': 'Garanti BBVA',
+                '6955': 'Garanti BBVA',
+                '6956': 'Garanti BBVA',
+                '6957': 'Garanti BBVA',
+                '6958': 'Garanti BBVA',
+                '6959': 'Garanti BBVA',
+                '6960': 'Garanti BBVA',
+                '6961': 'Garanti BBVA',
+                '6962': 'Garanti BBVA',
+                '6963': 'Garanti BBVA',
+                '6964': 'Garanti BBVA',
+                '6965': 'Garanti BBVA',
+                '6966': 'Garanti BBVA',
+                '6967': 'Garanti BBVA',
+                '6968': 'Garanti BBVA',
+                '6969': 'Garanti BBVA',
+                '6970': 'Garanti BBVA',
+                '6971': 'Garanti BBVA',
+                '6972': 'Garanti BBVA',
+                '6973': 'Garanti BBVA',
+                '6974': 'Garanti BBVA',
+                '6975': 'Garanti BBVA',
+                '6976': 'Garanti BBVA',
+                '6977': 'Garanti BBVA',
+                '6978': 'Garanti BBVA',
+                '6979': 'Garanti BBVA',
+                '6980': 'Garanti BBVA',
+                '6981': 'Garanti BBVA',
+                '6982': 'Garanti BBVA',
+                '6983': 'Garanti BBVA',
+                '6984': 'Garanti BBVA',
+                '6985': 'Garanti BBVA',
+                '6986': 'Garanti BBVA',
+                '6987': 'Garanti BBVA',
+                '6988': 'Garanti BBVA',
+                '6989': 'Garanti BBVA',
+                '6990': 'Garanti BBVA',
+                '6991': 'Garanti BBVA',
+                '6992': 'Garanti BBVA',
+                '6993': 'Garanti BBVA',
+                '6994': 'Garanti BBVA',
+                '6995': 'Garanti BBVA',
+                '6996': 'Garanti BBVA',
+                '6997': 'Garanti BBVA',
+                '6998': 'Garanti BBVA',
+                '6999': 'Garanti BBVA'
+            };
+            
+            const result = bankBins[firstFour] || bankBins[firstSix] || 'Bilinmeyen Banka';
+            console.log('Banka tespiti sonucu:', result); // Debug
+            return result;
+        }
+        
+        // Kart ön izlemesini güncelleyen fonksiyon
+        function updateCardPreview(type, value) {
+            switch(type) {
+                case 'number':
+                    const previewNumber = document.getElementById('previewCardNumber');
+                    const previewLogo = document.getElementById('previewCardLogo');
+                    const previewBank = document.getElementById('previewCardBank');
+                    
+                    if (value) {
+                        // Kart numarasını maskeleme ile göster - tüm rakamlar görünür, sadece ortadaki 4 hane gizli
+                        const cleanValue = value.replace(/\s/g, ''); // Boşlukları kaldır
+                        if (cleanValue.length >= 16) {
+                            // 16 haneli kart: 1234 5678 **** 9012 3456
+                            const firstEight = cleanValue.substring(0, 8);
+                            const lastEight = cleanValue.substring(8);
+                            previewNumber.textContent = `${firstEight.substring(0, 4)} ${firstEight.substring(4)} **** ${lastEight.substring(0, 4)} ${lastEight.substring(4)}`;
+                        } else if (cleanValue.length >= 12) {
+                            // 12+ haneli kart: 1234 5678 **** 9012
+                            const firstEight = cleanValue.substring(0, 8);
+                            const remaining = cleanValue.substring(8);
+                            previewNumber.textContent = `${firstEight.substring(0, 4)} ${firstEight.substring(4)} **** ${remaining}`;
+                        } else if (cleanValue.length >= 8) {
+                            // 8+ haneli kart: 1234 5678
+                            const firstFour = cleanValue.substring(0, 4);
+                            const remaining = cleanValue.substring(4);
+                            previewNumber.textContent = `${firstFour} ${remaining}`;
+                        } else if (cleanValue.length >= 4) {
+                            // 4+ haneli kart: 1234
+                            const firstFour = cleanValue.substring(0, 4);
+                            const remaining = cleanValue.substring(4);
+                            previewNumber.textContent = `${firstFour} ${remaining}`;
+                        } else {
+                            previewNumber.textContent = cleanValue;
+                        }
+                        
+                        // Banka tespiti - DEBUG EKLENDİ
+                        if (cleanValue.length >= 4) {
+                            const bankName = detectBank(cleanValue);
+                            console.log('Kart numarası:', cleanValue, 'Banka:', bankName); // Debug
+                            previewLogo.textContent = bankName;
+                            previewBank.textContent = '';
+                            console.log('Banka elementi:', previewLogo.textContent); // Debug
+                        } else {
+                            previewLogo.textContent = 'CREDIT CARD';
+                            previewBank.textContent = '';
+                        }
+                    } else {
+                        previewNumber.textContent = '**** **** **** ****';
+                        previewLogo.textContent = 'CREDIT CARD';
+                        previewBank.textContent = '';
+                    }
+                    break;
+                    
+                case 'holder':
+                    const previewHolder = document.getElementById('previewCardHolder');
+                    if (value) {
+                        previewHolder.textContent = value.toUpperCase();
+                    } else {
+                        previewHolder.textContent = 'KART SAHİBİ';
+                    }
+                    break;
+                    
+                case 'expiry':
+                    const previewExpiry = document.getElementById('previewCardExpiry');
+                    if (value) {
+                        previewExpiry.textContent = value;
+                    } else {
+                        previewExpiry.textContent = 'AA/YY';
+                    }
+                    break;
+                    
+                case 'cvv':
+                    const previewCvv = document.getElementById('previewCardCvv');
+                    if (value) {
+                        // CVV'yi gerçek rakamlarla göster
+                        previewCvv.textContent = value;
+                    } else {
+                        previewCvv.textContent = '***';
+                    }
+                    break;
+            }
+        }
+        
+        function setupFormValidation() {
+            // Kart numarası formatlaması ve ön izleme
+            const cardNumber = document.getElementById('cardNumber');
+            cardNumber.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s/g, '');
+                value = value.replace(/\D/g, '');
+                value = value.replace(/(\d{4})/g, '$1 ').trim();
+                e.target.value = value;
+                
+                // Kart ön izlemesini güncelle
+                updateCardPreview('number', value);
+            });
+            
+            // Son kullanma tarihi formatlaması ve ön izleme
+            const expiryDate = document.getElementById('expiryDate');
+            expiryDate.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value;
+                
+                // Kart ön izlemesini güncelle
+                updateCardPreview('expiry', value);
+            });
+            
+            // CVV sadece rakam ve ön izleme
+            const cvv = document.getElementById('cvv');
+            const cardPreview = document.getElementById('cardPreview');
+            
+            cvv.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '');
+                
+                // Kart ön izlemesini güncelle
+                updateCardPreview('cvv', e.target.value);
+            });
+            
+            // CVV alanına odaklanıldığında kartı çevir
+            cvv.addEventListener('focus', function() {
+                cardPreview.classList.add('flipped');
+            });
+            
+            // CVV alanından çıkıldığında kartı geri çevir
+            cvv.addEventListener('blur', function() {
+                cardPreview.classList.remove('flipped');
+            });
+            
+            // Telefon numarası formatlaması
+            const phone = document.getElementById('phone');
+            phone.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.startsWith('90')) {
+                    value = '+' + value;
+                } else if (value.startsWith('0')) {
+                    value = '+90' + value.substring(1);
+                } else if (!value.startsWith('+')) {
+                    value = '+90' + value;
+                }
+                e.target.value = value;
+            });
+            
+            // Kart sahibi ismi için ön izleme
+            const cardName = document.getElementById('cardName');
+            cardName.addEventListener('input', function(e) {
+                updateCardPreview('holder', e.target.value);
+            });
+            
+            // Kargo seçeneği değiştiğinde toplam tutarı güncelle
+            const shippingMethod = document.getElementById('shippingMethod');
+            shippingMethod.addEventListener('change', function() {
+                displayOrderSummary();
+            });
+        }
+        
+        // Form gönderimi
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                alert('Sepetiniz boş!');
+                return;
+            }
+            
+            // Ödeme işlemi simülasyonu
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> İşleniyor...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Ödeme başarıyla tamamlandı! Siparişiniz hazırlanıyor.');
+                
+                // Sepeti temizle
+                cart = [];
+                localStorage.removeItem('nettenbegenCart');
+                updateCartCount();
+                
+                // Ana sayfaya yönlendir
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+        
+        function openCart() {
+            // Sepet boşsa uyarı ver
+            if (cart.length === 0) {
+                alert('Sepetiniz boş!');
+                return;
+            }
+            
+            // Sepet sayfasına yönlendir (bu sayfa zaten ödeme sayfası)
+            window.location.href = 'payment.html';
+        }
+    </script>
+</body>
+</html> 
