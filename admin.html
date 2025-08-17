@@ -8736,7 +8736,38 @@
 
         function viewCategoryProducts(id) {
             // Kategori ürünlerini görüntüleme fonksiyonu
-            showNotification('Bu özellik yakında eklenecek!', 'info');
+            const categories = loadCategoriesData();
+            const category = categories.find(c => c.id === id);
+            
+            if (category) {
+                // Gelişmiş ürün yönetimi bölümüne geç
+                showSection('advanced-products');
+                
+                // Kategori filtresini ayarla ve filtreleme yap
+                setTimeout(() => {
+                    const categoryFilter = document.getElementById('productCategoryFilter');
+                    if (categoryFilter) {
+                        // Kategori seçeneklerini yükle (eğer yüklenmemişse)
+                        if (categoryFilter.options.length <= 1) {
+                            loadProductCategories();
+                        }
+                        
+                        // Kategoriyi seç
+                        categoryFilter.value = category.name;
+                        
+                        // Filtreleme fonksiyonunu çağır
+                        if (typeof filterAdvancedProducts === 'function') {
+                            filterAdvancedProducts();
+                        }
+                        
+                        showNotification(`${category.name} kategorisindeki ürünler gösteriliyor!`, 'success');
+                    } else {
+                        showNotification('Kategori filtresi bulunamadı!', 'error');
+                    }
+                }, 200);
+            } else {
+                showNotification('Kategori bulunamadı!', 'error');
+            }
         }
 
         // ---- Content Management Functions ----
