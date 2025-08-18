@@ -10829,13 +10829,30 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Türkçe karakterleri düzeltmek için font ayarları
+            // Türkçe karakter desteği için özel font ayarları
             doc.setFont('helvetica');
+            doc.setLanguage('tr');
+            
+            // Türkçe karakterleri düzgün göstermek için encoding ayarları
+            const turkishText = {
+                title: 'Satış Raporu',
+                date: 'Oluşturulma Tarihi',
+                summary: 'Özet Bilgiler',
+                totalOrders: 'Toplam Sipariş',
+                totalRevenue: 'Toplam Gelir',
+                details: 'Sipariş Detayları',
+                orderId: 'Sipariş ID',
+                customer: 'Müşteri',
+                products: 'Ürünler',
+                totalAmount: 'Toplam Tutar',
+                status: 'Durum',
+                date: 'Tarih'
+            };
             
             // Başlık
             doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('Satis Raporu', 105, 20, { align: 'center' });
+            doc.text(turkishText.title, 105, 20, { align: 'center' });
             
             // Tarih
             doc.setFontSize(12);
@@ -10845,7 +10862,7 @@
                 month: '2-digit',
                 day: '2-digit'
             });
-            doc.text(`Olusturulma Tarihi: ${currentDate}`, 105, 30, { align: 'center' });
+            doc.text(`${turkishText.date}: ${currentDate}`, 105, 30, { align: 'center' });
             
             // Özet bilgiler
             const orders = loadOrdersData();
@@ -10854,19 +10871,19 @@
             
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Ozet Bilgiler:', 20, 50);
+            doc.text(turkishText.summary + ':', 20, 50);
             
             doc.setFontSize(12);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Toplam Siparis: ${totalOrders}`, 20, 60);
-            doc.text(`Toplam Gelir: ${totalRevenue.toLocaleString('tr-TR')} TL`, 20, 70);
+            doc.text(`${turkishText.totalOrders}: ${totalOrders}`, 20, 60);
+            doc.text(`${turkishText.totalRevenue}: ${totalRevenue.toLocaleString('tr-TR')} TL`, 20, 70);
             
             // Tablo başlığı
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Siparis Detaylari:', 20, 90);
+            doc.text(turkishText.details + ':', 20, 90);
             
-            // Tablo verileri
+            // Tablo verileri - Türkçe karakterleri koruyarak
             const tableData = orders.map(order => [
                 order.id,
                 order.customer,
@@ -10878,7 +10895,7 @@
             
             doc.autoTable({
                 startY: 100,
-                head: [['Siparis ID', 'Musteri', 'Urunler', 'Toplam Tutar', 'Durum', 'Tarih']],
+                head: [[turkishText.orderId, turkishText.customer, turkishText.products, turkishText.totalAmount, turkishText.status, turkishText.date]],
                 body: tableData,
                 theme: 'grid',
                 headStyles: { fillColor: [102, 126, 234] },
@@ -10901,13 +10918,31 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Türkçe karakterleri düzeltmek için font ayarları
+            // Türkçe karakter desteği için özel font ayarları
             doc.setFont('helvetica');
+            doc.setLanguage('tr');
+            
+            // Türkçe karakterleri düzgün göstermek için encoding ayarları
+            const turkishText = {
+                title: 'Müşteri Raporu',
+                date: 'Oluşturulma Tarihi',
+                summary: 'Özet Bilgiler',
+                totalCustomers: 'Toplam Müşteri',
+                activeCustomers: 'Aktif Müşteri',
+                details: 'Müşteri Detayları',
+                customerId: 'Müşteri ID',
+                fullName: 'Ad Soyad',
+                email: 'E-posta',
+                phone: 'Telefon',
+                status: 'Durum',
+                registrationDate: 'Kayıt Tarihi',
+                totalOrders: 'Toplam Sipariş'
+            };
             
             // Başlık
             doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('Musteri Raporu', 105, 20, { align: 'center' });
+            doc.text(turkishText.title, 105, 20, { align: 'center' });
             
             // Tarih
             doc.setFontSize(12);
@@ -10917,7 +10952,7 @@
                 month: '2-digit',
                 day: '2-digit'
             });
-            doc.text(`Olusturulma Tarihi: ${currentDate}`, 105, 30, { align: 'center' });
+            doc.text(`${turkishText.date}: ${currentDate}`, 105, 30, { align: 'center' });
             
             // Özet bilgiler
             const customers = loadCustomersData();
@@ -10926,19 +10961,19 @@
             
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Ozet Bilgiler:', 20, 50);
+            doc.text(turkishText.summary + ':', 20, 50);
             
             doc.setFontSize(12);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Toplam Musteri: ${totalCustomers}`, 20, 60);
-            doc.text(`Aktif Musteri: ${activeCustomers}`, 20, 70);
+            doc.text(`${turkishText.totalCustomers}: ${totalCustomers}`, 20, 60);
+            doc.text(`${turkishText.activeCustomers}: ${activeCustomers}`, 20, 70);
             
             // Tablo başlığı
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Musteri Detaylari:', 20, 90);
+            doc.text(turkishText.details + ':', 20, 90);
             
-            // Tablo verileri
+            // Tablo verileri - Türkçe karakterleri koruyarak
             const tableData = customers.map(customer => [
                 customer.id,
                 customer.name,
@@ -10951,7 +10986,7 @@
             
             doc.autoTable({
                 startY: 100,
-                head: [['Musteri ID', 'Ad Soyad', 'E-posta', 'Telefon', 'Durum', 'Kayit Tarihi', 'Toplam Siparis']],
+                head: [[turkishText.customerId, turkishText.fullName, turkishText.email, turkishText.phone, turkishText.status, turkishText.registrationDate, turkishText.totalOrders]],
                 body: tableData,
                 theme: 'grid',
                 headStyles: { fillColor: [102, 126, 234] },
@@ -10975,13 +11010,33 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Türkçe karakterleri düzeltmek için font ayarları
+            // Türkçe karakter desteği için özel font ayarları
             doc.setFont('helvetica');
+            doc.setLanguage('tr');
+            
+            // Türkçe karakterleri düzgün göstermek için encoding ayarları
+            const turkishText = {
+                title: 'Ürün Raporu',
+                date: 'Oluşturulma Tarihi',
+                summary: 'Özet Bilgiler',
+                totalProducts: 'Toplam Ürün',
+                activeProducts: 'Aktif Ürün',
+                totalStockValue: 'Toplam Stok Değeri',
+                details: 'Ürün Detayları',
+                productId: 'Ürün ID',
+                productName: 'Ürün Adı',
+                sku: 'SKU',
+                category: 'Kategori',
+                price: 'Fiyat',
+                stock: 'Stok',
+                status: 'Durum',
+                featured: 'Öne Çıkan'
+            };
             
             // Başlık
             doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('Urun Raporu', 105, 20, { align: 'center' });
+            doc.text(turkishText.title, 105, 20, { align: 'center' });
             
             // Tarih
             doc.setFontSize(12);
@@ -10991,7 +11046,7 @@
                 month: '2-digit',
                 day: '2-digit'
             });
-            doc.text(`Olusturulma Tarihi: ${currentDate}`, 105, 30, { align: 'center' });
+            doc.text(`${turkishText.date}: ${currentDate}`, 105, 30, { align: 'center' });
             
             // Özet bilgiler
             const products = loadAdvancedProductsData();
@@ -11001,20 +11056,20 @@
             
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Ozet Bilgiler:', 20, 50);
+            doc.text(turkishText.summary + ':', 20, 50);
             
             doc.setFontSize(12);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Toplam Urun: ${totalProducts}`, 20, 60);
-            doc.text(`Aktif Urun: ${activeProducts}`, 20, 70);
-            doc.text(`Toplam Stok Degeri: ${totalValue.toLocaleString('tr-TR')} TL`, 20, 80);
+            doc.text(`${turkishText.totalProducts}: ${totalProducts}`, 20, 60);
+            doc.text(`${turkishText.activeProducts}: ${activeProducts}`, 20, 70);
+            doc.text(`${turkishText.totalStockValue}: ${totalValue.toLocaleString('tr-TR')} TL`, 20, 80);
             
             // Tablo başlığı
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Urun Detaylari:', 20, 100);
+            doc.text(turkishText.details + ':', 20, 100);
             
-            // Tablo verileri
+            // Tablo verileri - Türkçe karakterleri koruyarak
             const tableData = products.map(product => [
                 product.id,
                 product.name,
@@ -11023,12 +11078,12 @@
                 `${product.price.toLocaleString('tr-TR')} TL`,
                 product.stock,
                 product.status,
-                product.featured ? 'Evet' : 'Hayir'
+                product.featured ? 'Evet' : 'Hayır'
             ]);
             
             doc.autoTable({
                 startY: 110,
-                head: [['Urun ID', 'Urun Adi', 'SKU', 'Kategori', 'Fiyat', 'Stok', 'Durum', 'One Cikan']],
+                head: [[turkishText.productId, turkishText.productName, turkishText.sku, turkishText.category, turkishText.price, turkishText.stock, turkishText.status, turkishText.featured]],
                 body: tableData,
                 theme: 'grid',
                 headStyles: { fillColor: [102, 126, 234] },
@@ -11053,13 +11108,33 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Türkçe karakterleri düzeltmek için font ayarları
+            // Türkçe karakter desteği için özel font ayarları
             doc.setFont('helvetica');
+            doc.setLanguage('tr');
+            
+            // Türkçe karakterleri düzgün göstermek için encoding ayarları
+            const turkishText = {
+                title: 'Stok Raporu',
+                date: 'Oluşturulma Tarihi',
+                summary: 'Özet Bilgiler',
+                totalProducts: 'Toplam Ürün',
+                criticalStock: 'Kritik Stok',
+                lowStock: 'Düşük Stok',
+                details: 'Stok Detayları',
+                productId: 'Ürün ID',
+                productName: 'Ürün Adı',
+                sku: 'SKU',
+                category: 'Kategori',
+                currentStock: 'Mevcut Stok',
+                criticalStockStatus: 'Kritik Stok',
+                status: 'Durum',
+                lastUpdate: 'Son Güncelleme'
+            };
             
             // Başlık
             doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('Stok Raporu', 105, 20, { align: 'center' });
+            doc.text(turkishText.title, 105, 20, { align: 'center' });
             
             // Tarih
             doc.setFontSize(12);
@@ -11069,7 +11144,7 @@
                 month: '2-digit',
                 day: '2-digit'
             });
-            doc.text(`Olusturulma Tarihi: ${currentDate}`, 105, 30, { align: 'center' });
+            doc.text(`${turkishText.date}: ${currentDate}`, 105, 30, { align: 'center' });
             
             // Özet bilgiler
             const products = loadAdvancedProductsData();
@@ -11079,29 +11154,29 @@
             
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Ozet Bilgiler:', 20, 50);
+            doc.text(turkishText.summary + ':', 20, 50);
             
             doc.setFontSize(12);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Toplam Urun: ${totalProducts}`, 20, 60);
-            doc.text(`Kritik Stok: ${criticalStock}`, 20, 70);
-            doc.text(`Dusuk Stok: ${lowStock}`, 20, 80);
+            doc.text(`${turkishText.totalProducts}: ${totalProducts}`, 20, 60);
+            doc.text(`${turkishText.criticalStock}: ${criticalStock}`, 20, 70);
+            doc.text(`${turkishText.lowStock}: ${lowStock}`, 20, 80);
             
             // Tablo başlığı
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('Stok Detaylari:', 20, 100);
+            doc.text(turkishText.details + ':', 20, 100);
             
-            // Tablo verileri
+            // Tablo verileri - Türkçe karakterleri koruyarak
             const tableData = products.map(product => {
-                const stockStatus = product.stock <= 5 ? 'Kritik' : product.stock <= 20 ? 'Dusuk' : 'Normal';
+                const stockStatus = product.stock <= 5 ? 'Kritik' : product.stock <= 20 ? 'Düşük' : 'Normal';
                 return [
                     product.id,
                     product.name,
                     product.sku,
                     product.category,
                     product.stock,
-                    product.stock <= 5 ? 'Evet' : 'Hayir',
+                    product.stock <= 5 ? 'Evet' : 'Hayır',
                     stockStatus,
                     product.updatedAt || new Date().toISOString().split('T')[0]
                 ];
@@ -11109,7 +11184,7 @@
             
             doc.autoTable({
                 startY: 110,
-                head: [['Urun ID', 'Urun Adi', 'SKU', 'Kategori', 'Mevcut Stok', 'Kritik Stok', 'Durum', 'Son Guncelleme']],
+                head: [[turkishText.productId, turkishText.productName, turkishText.sku, turkishText.category, turkishText.currentStock, turkishText.criticalStockStatus, turkishText.status, turkishText.lastUpdate]],
                 body: tableData,
                 theme: 'grid',
                 headStyles: { fillColor: [102, 126, 234] },
