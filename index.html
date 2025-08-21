@@ -750,6 +750,15 @@
         .product-actions .btn { flex:1; border-radius:10px; padding:10px 12px; font-weight:700; }
         .product-actions .btn.btn-primary { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border:none; }
         .product-actions .btn.btn-primary:hover { filter: brightness(1.05); }
+        .product-actions .btn.btn-primary:disabled { 
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%); 
+            cursor: not-allowed; 
+            opacity: 0.6;
+        }
+        .product-actions .btn.btn-primary:disabled:hover { 
+            filter: none; 
+            transform: none;
+        }
         .product-actions .btn.btn-secondary { border:2px solid #e7e7e7; color:#333; background:#fff; }
         .product-actions .btn.btn-secondary:hover { border-color:#cfd6de; }
 
@@ -758,6 +767,41 @@
         .product-card:hover .product-image img { transform: scale(1.06); }
         .product-image::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.25), rgba(0,0,0,0)); opacity:.6; pointer-events:none; }
         .product-badge { position:absolute; top:10px; left:10px; background:#ff6b35; color:#fff; padding:6px 10px; border-radius:12px; font-size:12px; font-weight:700; z-index:1; }
+        
+        /* Stok Durumu Badge'leri */
+        .stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .stock-badge.in-stock {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .stock-badge.low-stock {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+        
+        .stock-badge.out-of-stock {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+        
+        .stock-badge i {
+            font-size: 10px;
+        }
 
         /* Modern improvements */
         .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.14); }
@@ -2478,6 +2522,16 @@
         @media (max-width: 768px) {
             .nav-search { width: 100%; justify-content: flex-start; }
             .nav-search input[type="search"] { width: 100%; }
+            
+            /* Mobilde stok badge'lerini küçült */
+            .stock-badge {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            
+            .stock-badge i {
+                font-size: 8px;
+            }
         }
 
         /* Search suggestions */
@@ -3940,6 +3994,13 @@
         function addToCartByData(button) {
             const name = button.getAttribute('data-product');
             const price = parseFloat(button.getAttribute('data-price')) || 0;
+            
+            // Stok kontrolü
+            if (button.disabled) {
+                showNotification('Bu ürün stokta bulunmamaktadır!', 'error');
+                return;
+            }
+            
             addToCart(name, price);
         }
 
@@ -4290,10 +4351,30 @@
             const originalPrice = discount > 0 ? Math.round(product.price * (1 + discount / 100)) : product.price;
             const discountedPrice = discount > 0 ? product.price : originalPrice;
 
+            // Stok durumu badge'i oluştur
+            let stockBadge = '';
+            if (product.stock > 10) {
+                stockBadge = `<div class="stock-badge in-stock">
+                    <i class="fas fa-check-circle"></i>
+                    Stokta
+                </div>`;
+            } else if (product.stock > 0) {
+                stockBadge = `<div class="stock-badge low-stock">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Son ${product.stock} Adet
+                </div>`;
+            } else {
+                stockBadge = `<div class="stock-badge out-of-stock">
+                    <i class="fas fa-times-circle"></i>
+                    Stokta Yok
+                </div>`;
+            }
+
             card.innerHTML = `
                 <div class="product-image">
                     <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/4facfe/ffffff?text=${encodeURIComponent(product.name)}'">
                     ${discount > 0 ? `<div class="product-badge">%${discount} İndirim</div>` : ''}
+                    ${stockBadge}
                 </div>
                 <div class="product-info">
                     <h3>${product.name}</h3>
@@ -4308,8 +4389,8 @@
                         ${discount > 0 ? `<span class="original-price">₺${originalPrice.toLocaleString()}</span>` : ''}
                     </div>
                     <div class="product-actions">
-                        <button class="btn btn-primary add-to-cart" data-product="${product.name}" data-price="${discountedPrice}" onclick="event.stopPropagation(); addToCartByData(this);">
-                            <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                        <button class="btn btn-primary add-to-cart" data-product="${product.name}" data-price="${discountedPrice}" onclick="event.stopPropagation(); addToCartByData(this);" ${product.stock <= 0 ? 'disabled' : ''}>
+                            <i class="fas fa-shopping-cart"></i> ${product.stock <= 0 ? 'Stokta Yok' : 'Sepete Ekle'}
                         </button>
                         <a href="product-detail.html?id=${product.id}" class="btn btn-secondary" onclick="event.stopPropagation();">Detaylar</a>
                     </div>
@@ -4379,6 +4460,16 @@
                 
                 card.style.display = show ? '' : 'none';
             });
+            
+            // Filtre uygulandığında bildirim göster
+            if (selectedStock) {
+                const filterText = {
+                    'inStock': 'Stokta olan ürünler',
+                    'lowStock': 'Az stoklu ürünler',
+                    'outOfStock': 'Stokta olmayan ürünler'
+                };
+                showFilterNotification(`${filterText[selectedStock]} gösteriliyor`, 'info');
+            }
         }
 
         function applyDiscountFilter() {

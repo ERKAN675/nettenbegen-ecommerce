@@ -402,6 +402,41 @@
             font-size: 0.8rem;
             font-weight: bold;
         }
+        
+        /* Stok Durumu Badge'leri */
+        .stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .stock-badge.in-stock {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .stock-badge.low-stock {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+        
+        .stock-badge.out-of-stock {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+        
+        .stock-badge i {
+            font-size: 10px;
+        }
 
         .product-info {
             padding: 1.5rem;
@@ -481,6 +516,17 @@
         .btn-primary:hover {
             background: #3d9bfe;
             transform: translateY(-2px);
+        }
+        
+        .btn-primary:disabled { 
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%); 
+            cursor: not-allowed; 
+            opacity: 0.6;
+        }
+        
+        .btn-primary:disabled:hover { 
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+            transform: none;
         }
 
         .btn-secondary {
@@ -978,11 +1024,31 @@
                 const originalPrice = discount > 0 ? Math.round(product.price * (1 + discount / 100)) : product.price;
                 const discountedPrice = discount > 0 ? product.price : originalPrice;
 
+                // Stok durumu badge'i oluştur
+                let stockBadge = '';
+                if (product.stock > 10) {
+                    stockBadge = `<div class="stock-badge in-stock">
+                        <i class="fas fa-check-circle"></i>
+                        Stokta
+                    </div>`;
+                } else if (product.stock > 0) {
+                    stockBadge = `<div class="stock-badge low-stock">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Son ${product.stock} Adet
+                    </div>`;
+                } else {
+                    stockBadge = `<div class="stock-badge out-of-stock">
+                        <i class="fas fa-times-circle"></i>
+                        Stokta Yok
+                    </div>`;
+                }
+
                 return `
                     <div class="product-card" data-category="${product.category}">
                         <div class="product-image">
                             ${imageDisplay}
                             ${discount > 0 ? `<div class="product-badge">%${discount} İndirim</div>` : (product.badge ? `<div class="product-badge">${product.badge}</div>` : '')}
+                            ${stockBadge}
                         </div>
                         <div class="product-info">
                             <h3>${product.name}</h3>
@@ -996,8 +1062,8 @@
                                 ${discount > 0 ? `<span class="original-price">₺${originalPrice.toLocaleString()}</span>` : ''}
                             </div>
                             <div class="product-actions">
-                                <button class="btn btn-primary add-to-cart" data-product="${product.name}" data-price="${discountedPrice}">
-                                    <i class="fas fa-shopping-cart"></i> Sepete Ekle
+                                <button class="btn btn-primary add-to-cart" data-product="${product.name}" data-price="${discountedPrice}" ${product.stock <= 0 ? 'disabled' : ''} onclick="addToCartByData(this)">
+                                    <i class="fas fa-shopping-cart"></i> ${product.stock <= 0 ? 'Stokta Yok' : 'Sepete Ekle'}
                                 </button>
                                 <a href="product-detail.html?id=${product.id}" class="btn btn-secondary">Detaylar</a>
                             </div>
@@ -1008,10 +1074,9 @@
 
             // Add event listeners to add to cart buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productName = this.getAttribute('data-product');
-                    const productPrice = parseInt(this.getAttribute('data-price'));
-                    addToCart(productName, productPrice);
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    addToCartByData(this);
                 });
             });
         }
@@ -1138,6 +1203,19 @@
             saveCartToStorage();
             updateCartCount();
             showNotification(`${productName} sepete eklendi!`);
+        }
+        
+        function addToCartByData(button) {
+            const name = button.getAttribute('data-product');
+            const price = parseFloat(button.getAttribute('data-price')) || 0;
+            
+            // Stok kontrolü
+            if (button.disabled) {
+                showNotification('Bu ürün stokta bulunmamaktadır!');
+                return;
+            }
+            
+            addToCart(name, price);
         }
 
         function updateCartCount() {
